@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIXER - AIX Extension Builder for App Inventor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            color: #1a1a2e;
+            line-height: 1.6;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* Nav */
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #eaeef2;
+            padding: 16px 0;
+        }
+        nav .container {
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo {
+            font-size: 24px; font-weight: 800;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+        .nav-links { display: flex; gap: 24px; align-items: center; }
+        .nav-links a {
+            text-decoration: none; color: #4b5563; font-size: 14px; font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: #2563eb; }
+
+        /* Hero */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+        }
+        .hero h1 {
+            font-size: clamp(40px, 5vw, 64px);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 18px; color: #6b7280; max-width: 680px;
+            margin: 0 auto 40px;
+        }
+        .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 14px 32px; border-radius: 12px;
+            font-size: 16px; font-weight: 600; text-decoration: none;
+            transition: all 0.2s; cursor: pointer; border: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #fff;
+            box-shadow: 0 4px 24px rgba(37,99,235,0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(37,99,235,0.4);
+        }
+        .btn-outline {
+            background: transparent;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+        }
+        .btn-outline:hover {
+            background: #2563eb;
+            color: #fff;
+        }
+        .btn-green {
+            background: #16a34a; color: #fff;
+            box-shadow: 0 4px 24px rgba(22,163,74,0.3);
+        }
+        .btn-green:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(22,163,74,0.4);
+        }
+        .btn-whatsapp {
+            background: #25D366; color: #fff;
+            box-shadow: 0 4px 24px rgba(37,211,102,0.3);
+        }
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(37,211,102,0.4);
+        }
+
+        /* Sections */
+        section { padding: 80px 0; }
+        .section-title {
+            font-size: 32px; font-weight: 700;
+            text-align: center; margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+        .section-subtitle {
+            text-align: center; color: #6b7280; font-size: 16px;
+            max-width: 600px; margin: 0 auto 48px;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .feature-card {
+            background: #f8fafc;
+            border: 1px solid #eaeef2;
+            border-radius: 16px;
+            padding: 28px;
+            transition: all 0.2s;
+        }
+        .feature-card:hover {
+            border-color: #2563eb;
+            box-shadow: 0 4px 24px rgba(37,99,235,0.08);
+            transform: translateY(-2px);
+        }
+        .feature-icon {
+            width: 44px; height: 44px;
+            background: linear-gradient(135deg, #dbeafe, #ede9fe);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; margin-bottom: 16px;
+        }
+        .feature-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .feature-card p { font-size: 14px; color: #6b7280; line-height: 1.6; }
+
+        /* Tabs */
+        .tabs { display: flex; gap: 4px; background: #f1f5f9; padding: 4px; border-radius: 12px; margin-bottom: 32px; justify-content: center; flex-wrap: wrap; }
+        .tab { padding: 10px 24px; border-radius: 8px; border: none; background: transparent; font-size: 14px; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; }
+        .tab.active { background: #fff; color: #1a1a2e; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+        .tab:hover:not(.active) { color: #2563eb; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Install Guide */
+        .install-step { display: flex; gap: 16px; margin-bottom: 16px; align-items: flex-start; }
+        .step-num {
+            width: 32px; height: 32px; min-width: 32px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #fff; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; font-weight: 700;
+        }
+        .install-step p { font-size: 15px; color: #374151; padding-top: 4px; }
+        .install-step code {
+            background: #f1f5f9; padding: 2px 8px; border-radius: 4px;
+            font-size: 13px; color: #2563eb; font-family: 'JetBrains Mono', monospace;
+        }
+        .code-block {
+            background: #1e293b; color: #e2e8f0; padding: 16px 20px;
+            border-radius: 12px; font-size: 14px; font-family: 'JetBrains Mono', monospace;
+            overflow-x: auto; margin: 12px 0 24px; line-height: 1.7;
+            white-space: pre;
+        }
+        .note-box {
+            background: #fffbeb; border: 1px solid #fde68a;
+            border-radius: 12px; padding: 16px 20px; font-size: 14px; color: #92400e; margin: 16px 0;
+        }
+
+        /* Commands Table */
+        .commands-table { width: 100%; border-collapse: collapse; }
+        .commands-table th {
+            text-align: left; padding: 12px 16px;
+            font-size: 13px; font-weight: 600; color: #6b7280;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            border-bottom: 2px solid #eaeef2;
+        }
+        .commands-table td {
+            padding: 14px 16px; border-bottom: 1px solid #f1f5f9;
+            font-size: 14px; vertical-align: top;
+        }
+        .commands-table tr:hover td { background: #f8fafc; }
+        .cmd-name {
+            font-family: 'JetBrains Mono', monospace;
+            color: #2563eb; font-weight: 500; white-space: nowrap;
+        }
+        .cmd-desc { color: #374151; }
+        .cmd-example {
+            font-family: 'JetBrains Mono', monospace;
+            color: #6b7280; font-size: 13px; display: block; margin-top: 4px;
+        }
+
+        /* Comparison Table */
+        .compare-table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 12px; overflow: hidden; border: 1px solid #eaeef2; }
+        .compare-table th { background: #f8fafc; padding: 14px 20px; font-size: 14px; font-weight: 600; text-align: left; border-bottom: 1px solid #eaeef2; }
+        .compare-table td { padding: 12px 20px; font-size: 14px; border-bottom: 1px solid #f1f5f9; }
+        .compare-table tr:last-child td { border-bottom: none; }
+        .check { color: #16a34a; font-weight: 700; }
+        .cross { color: #ef4444; }
+        .label-aixer { background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
+
+        /* Project Guide */
+        .file-tree { background: #f8fafc; border: 1px solid #eaeef2; border-radius: 12px; padding: 20px 24px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 2; color: #374151; margin-bottom: 32px; }
+        .file-tree .dir { color: #2563eb; font-weight: 600; }
+        .file-tree .file { color: #374151; }
+        .file-tree .arrow { color: #9ca3af; }
+        .file-structure { background: #f8fafc; border: 1px solid #eaeef2; border-radius: 12px; padding: 24px 28px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 2.2; color: #374151; white-space: pre; overflow-x: auto; margin-bottom: 32px; }
+        .file-structure .dir { color: #2563eb; font-weight: 600; }
+        .file-structure .file { color: #374151; }
+        .file-structure .annotation { color: #9ca3af; }
+        .guide-card { background: #ffffff; border: 1px solid #eaeef2; border-radius: 16px; margin-bottom: 24px; overflow: hidden; }
+        .guide-card-header { background: #f8fafc; padding: 16px 24px; border-bottom: 1px solid #eaeef2; font-size: 18px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+        .guide-card-body { padding: 24px; }
+        .guide-card-body h4 { font-size: 15px; font-weight: 600; margin: 20px 0 8px; color: #1e293b; }
+        .guide-card-body h4:first-child { margin-top: 0; }
+        .guide-card-body p { font-size: 14px; color: #4b5563; line-height: 1.7; margin-bottom: 12px; }
+        .guide-card-body ul { margin: 8px 0 16px; padding-left: 20px; }
+        .guide-card-body li { font-size: 14px; color: #4b5563; line-height: 1.7; margin-bottom: 4px; }
+        .guide-card-body .code-block { margin: 12px 0 16px; }
+        .config-doc { margin-bottom: 12px; }
+        .config-key { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #7c3aed; font-size: 13px; }
+        .config-desc { font-size: 14px; color: #4b5563; line-height: 1.7; }
+        .config-desc code { background: #f1f5f9; padding: 1px 6px; border-radius: 4px; font-size: 12px; color: #2563eb; }
+        .inline-code { background: #f1f5f9; padding: 2px 8px; border-radius: 4px; font-size: 13px; color: #2563eb; font-family: 'JetBrains Mono', monospace; }
+        .edit-highlight { background: #fef2f2; border-left: 4px solid #ef4444; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; }
+        .edit-highlight strong { color: #dc2626; }
+        .edit-tip { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; }
+        .edit-tip strong { color: #16a34a; }
+        .field-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+        .field-table th { text-align: left; padding: 10px 14px; font-size: 12px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #eaeef2; background: #f8fafc; }
+        .field-table td { padding: 10px 14px; border-bottom: 1px solid #f1f5f9; font-size: 13px; vertical-align: top; }
+        .field-table .f-name { font-family: 'JetBrains Mono', monospace; color: #7c3aed; font-weight: 500; white-space: nowrap; }
+        .field-table .f-type { font-family: 'JetBrains Mono', monospace; color: #059669; font-size: 12px; }
+        .field-table .f-desc { color: #4b5563; font-size: 13px; }
+
+        /* Pricing */
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto; }
+        .pricing-card { background: #ffffff; border: 2px solid #eaeef2; border-radius: 20px; padding: 32px 24px; text-align: center; transition: all 0.3s; position: relative; }
+        .pricing-card:hover { border-color: #2563eb; transform: translateY(-4px); box-shadow: 0 12px 40px rgba(37,99,235,0.1); }
+        .pricing-card.featured { border-color: #2563eb; box-shadow: 0 8px 32px rgba(37,99,235,0.15); }
+        .pricing-card.featured::before { content: "Best Value"; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #2563eb, #7c3aed); color: #fff; font-size: 12px; font-weight: 700; padding: 4px 16px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .pricing-name { font-size: 16px; font-weight: 600; color: #6b7280; margin-bottom: 8px; }
+        .pricing-price { font-size: 40px; font-weight: 800; color: #1a1a2e; margin-bottom: 4px; letter-spacing: -1px; }
+        .pricing-price span { font-size: 18px; font-weight: 500; color: #9ca3af; }
+        .pricing-duration { font-size: 14px; color: #6b7280; margin-bottom: 16px; }
+        .pricing-desc { font-size: 14px; color: #4b5563; line-height: 1.6; margin-bottom: 20px; }
+        .pricing-trial { background: linear-gradient(135deg, #fef3c7, #fde68a); border-radius: 12px; padding: 20px 24px; text-align: center; max-width: 600px; margin: 0 auto 40px; }
+        .pricing-trial h3 { font-size: 22px; font-weight: 800; color: #92400e; }
+        .pricing-trial p { font-size: 15px; color: #78350f; margin-top: 4px; }
+        .btn-pricing { display: inline-block; padding: 12px 32px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; background: #f1f5f9; color: #374151; transition: all 0.2s; }
+        .btn-pricing:hover { background: #2563eb; color: #fff; }
+        .btn-pricing.featured-btn { background: linear-gradient(135deg, #2563eb, #7c3aed); color: #fff; box-shadow: 0 4px 16px rgba(37,99,235,0.3); }
+        .btn-pricing.featured-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,0.4); }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid #eaeef2;
+            padding: 40px 0;
+            text-align: center;
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero { padding: 60px 0 40px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .commands-table { font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="container">
+        <div class="logo"><a href="#" style="text-decoration: none; background: inherit; -webkit-background-clip: inherit; -webkit-text-fill-color: inherit;">AIXER</a></div>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#install">Installation</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#commands">Commands</a>
+            <a href="#project-guide">Project Guide</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="container">
+        <img src="https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/x2q917cyweuBOrrmFDYjUIcPTTtLKXBq_e2848b3bd01882807f829d8146c7b827fac98eb8d3f2445008fbebc86b634f0d.png" alt="AIXER Logo" style="height: 240px; margin-bottom: 12px;">
+        <p style="font-size: 18px; font-weight: 700; color: #1a1a2e; letter-spacing: 1px; margin-bottom: 20px; text-transform: uppercase;">Automated Extension Building, No More Manual Hustle</p>
+        <h1>AIXER &mdash; Empowers Kids To Build Extensions</h1>
+        <p style="font-size: clamp(14px, 1.75vw, 22px); font-weight: 500; color: #6b7280; max-width: 700px; margin: 0 auto 20px; line-height: 1.5;">Make Extensions For App Inventor, Kodular, Niotron &amp; Other AI2 Based No-code App Builders.</p>
+        <p>
+            AIXER is a powerful build system for MIT App Inventor extensions. Create dependency-based
+            extensions like AdMob, Play Billing, ExoPlayer, and more with CLI tools, a desktop GUI,
+            and a reproducible packaging pipeline.
+        </p>
+        <div class="hero-buttons">
+            <a href="http://www.aixer.com/aixer.zip" class="btn btn-primary">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download AIXER
+            </a>
+            <a href="http://www.paypal.com/aixer_purchase_link" class="btn btn-green">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                Purchase License
+            </a>
+            <a href="https://wa.me/919999999998" class="btn btn-whatsapp">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Contact Support
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Capabilities -->
+<section style="padding: 40px 0 80px;">
+    <div class="container">
+        <h2 class="section-title">Capabilities</h2>
+        <p class="section-subtitle">AIXER ships with professional-grade tooling for building, testing, and shipping App Inventor extensions.</p>
+        <table class="compare-table">
+            <tr>
+                <th>Capability</th>
+                <th><span class="label-aixer">AIXER</span></th>
+            </tr>
+            <tr><td>CLI builds</td><td class="check">Yes</td></tr>
+            <tr><td>Desktop GUI (AIXER Studio)</td><td class="check">Yes</td></tr>
+            <tr><td>Environment diagnostics (<code>aixer doctor</code>)</td><td class="check">Yes</td></tr>
+            <tr><td>Maven + Gradle dependency resolution</td><td class="check">Yes</td></tr>
+            <tr><td>Auto-import &rarr; dependency inference</td><td class="check">Yes</td></tr>
+            <tr><td>ProGuard / R8 release builds</td><td class="check">Yes</td></tr>
+            <tr><td>Kotlin support</td><td class="check">Yes</td></tr>
+            <tr><td>Multi-component extensions</td><td class="check">Yes</td></tr>
+            <tr><td>Markdown docs (<code>build --docs</code>)</td><td class="check">Yes</td></tr>
+            <tr><td>Annotation stripping in output <code>.aix</code></td><td class="check">Yes (default)</td></tr>
+            <tr><td>FAST / Rush project migration</td><td class="check"><code>aixer migrate</code></td></tr>
+        </table>
+    </div>
+</section>
+
+<!-- Features -->
+<section id="features" style="background: #f8fafc;">
+    <div class="container">
+        <h2 class="section-title">All Features</h2>
+        <p class="section-subtitle">AIXER ships with everything you need to build, test, and ship professional App Inventor extensions.</p>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F4C2;</div>
+                <h3>Extension Scaffolding</h3>
+                <p>Create new extension projects instantly with <code>aixer init</code>. Supports Java and Kotlin with optional SDK presets.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x2699;&#xFE0F;</div>
+                <h3>Dependency Resolution</h3>
+                <p>Automatically resolve Maven &amp; Gradle dependencies. Auto-detect dependencies from Java/Kotlin imports.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F4E6;</div>
+                <h3>30+ SDK Presets</h3>
+                <p>Curated SDK presets for AdMob, Lottie, Play Billing, ExoPlayer, OneSignal, Firebase, and more.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F680;</div>
+                <h3>Release Builds</h3>
+                <p>Build production-ready .aix files with ProGuard/R8 optimization. Smaller, obfuscated, and secure.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F4BB;</div>
+                <h3>Desktop GUI (AIXER Studio)</h3>
+                <p>Launch the AIXER Studio desktop application with <code>aixer gui</code> for a visual build experience.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F50D;</div>
+                <h3>Environment Doctor</h3>
+                <p>Audit your development environment and project with <code>aixer doctor</code> — catch issues early.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F4DC;</div>
+                <h3>Markdown Documentation</h3>
+                <p>Auto-generate Markdown documentation for your extension with <code>aixer build --docs</code>.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F9F0;</div>
+                <h3>Custom XML Resources</h3>
+                <p>Add custom XML for ExoPlayer, FileProvider, layouts, drawables, and more. Validated with <code>aixer xml check</code>.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F504;</div>
+                <h3>FAST / Rush Migration</h3>
+                <p>Seamlessly migrate existing FAST or Rush projects to AIXER with <code>aixer migrate</code>.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F3E0;</div>
+                <h3>Kotlin Support</h3>
+                <p>Write your extensions in Kotlin with full build support and dependency resolution.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F5C4;&#xFE0F;</div>
+                <h3>Helper Dropdown Blocks</h3>
+                <p>Support for red dropdown helper blocks via <code>@Options</code> and <code>OptionList</code> enums.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F310;</div>
+                <h3>Multi-Platform</h3>
+                <p>Works on Windows, Linux, and macOS with bundled Python and JDK support.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F4E6;</div>
+                <h3>Global JAR Management</h3>
+                <p>Manage shared JARs across all projects with <code>aixer global-jar</code> commands.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F4F1;</div>
+                <h3>Multi-Component Extensions</h3>
+                <p>Build extensions with multiple components in a single .aix package.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x267B;&#xFE0F;</div>
+                <h3>Annotation Stripping</h3>
+                <p>Automatically strip compile-time annotations from shipped bytecode for smaller .aix files.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F527;</div>
+                <h3>Dex &amp; Tools Support</h3>
+                <p>Dex JAR files with D8/R8 and manage optional build tools like rt.jar, desugar.jar, jetifier.jar.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F4F6;</div>
+                <h3>Auto-Update System</h3>
+                <p>Update AIXER to the latest version with <code>aixer update</code>. Firebase-powered update distribution.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F3C6;</div>
+                <h3>GitHub Actions CI</h3>
+                <p>Automatically generated GitHub Actions workflow on <code>init</code> for continuous integration.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Installation -->
+<section id="install">
+    <div class="container">
+        <h2 class="section-title">Installation Guides</h2>
+        <p class="section-subtitle">Choose your platform and follow the steps to get AIXER up and running.</p>
+
+        <div class="tabs" id="installTabs">
+            <button class="tab active" data-tab="windows">Windows</button>
+            <button class="tab" data-tab="linux">Linux</button>
+            <button class="tab" data-tab="mac">macOS</button>
+        </div>
+
+        <!-- Windows -->
+        <div class="tab-content active" id="tab-windows">
+            <div class="install-step">
+                <div class="step-num">1</div>
+                <p>Download and extract the AIXER ZIP file to a folder, e.g. <code>C:\Aixer</code></p>
+            </div>
+            <div class="install-step">
+                <div class="step-num">2</div>
+                <p>Open <strong>Command Prompt</strong> and navigate to the AIXER folder:</p>
+            </div>
+            <div class="code-block">cd C:\Aixer</div>
+            <div class="install-step">
+                <div class="step-num">3</div>
+                <p>Run the installer (this installs Python, JDK 17, and required JARs):</p>
+            </div>
+            <div class="code-block">.\aixer.bat install</div>
+            <div class="install-step">
+                <div class="step-num">alt</div>
+                <p><em>Optional:</em> Install as a Python package instead (if you have Python 3.8+ installed):</p>
+            </div>
+            <div class="code-block">python -m pip install -e .</div>
+            <div class="install-step">
+                <div class="step-num">4</div>
+                <p>Verify the installation:</p>
+            </div>
+            <div class="code-block">aixer --help</div>
+            <div class="install-step">
+                <div class="step-num">5</div>
+                <p>Create your first extension project:</p>
+            </div>
+            <div class="code-block">aixer init MyExtension</div>
+            <div class="install-step">
+                <div class="step-num">6</div>
+                <p>Build your extension:</p>
+            </div>
+            <div class="code-block">cd MyExtension<br>aixer build</div>
+            <p style="font-size: 14px; color: #6b7280; margin-top: 8px;">Your built <code>.aix</code> file will be created in the <code>output</code> folder.</p>
+            <div class="note-box">
+                <strong>Note:</strong> Keep the AIXER folder in one place. Do not delete the <code>tools</code> folder after installation. If you move the AIXER folder, run <code>.\aixer.bat install</code> again from the new location.
+            </div>
+        </div>
+
+        <!-- Linux -->
+        <div class="tab-content" id="tab-linux">
+            <p style="margin-bottom: 20px; color: #6b7280;">The Linux installation follows the same steps as macOS. Use the <code>aixer.sh</code> launcher script.</p>
+            <div class="install-step">
+                <div class="step-num">1</div>
+                <p>Download and extract the AIXER ZIP file to a folder, e.g. <code>~/Aixer</code></p>
+            </div>
+            <div class="install-step">
+                <div class="step-num">2</div>
+                <p>Open <strong>Terminal</strong> and navigate to the AIXER folder:</p>
+            </div>
+            <div class="code-block">cd ~/Aixer</div>
+            <div class="install-step">
+                <div class="step-num">3</div>
+                <p>Make the launcher executable and run the installer:</p>
+            </div>
+            <div class="code-block">chmod +x ./aixer.sh<br>./aixer.sh install</div>
+            <div class="install-step">
+                <div class="step-num">alt</div>
+                <p><em>Optional:</em> Install as a Python package instead (if you have Python 3.8+ installed):</p>
+            </div>
+            <div class="code-block">python3 -m pip install -e .</div>
+            <div class="install-step">
+                <div class="step-num">4</div>
+                <p>Verify the installation:</p>
+            </div>
+            <div class="code-block">aixer --help</div>
+            <div class="install-step">
+                <div class="step-num">5</div>
+                <p>Create and build your first extension:</p>
+            </div>
+            <div class="code-block">aixer init MyExtension<br>cd MyExtension<br>aixer build</div>
+            <div class="note-box">
+                <strong>Note:</strong> If Python 3 is missing, install it from your package manager (<code>sudo apt install python3</code> on Debian/Ubuntu). Keep the AIXER folder in one place. Run <code>./aixer.sh install</code> again if you move the folder.
+            </div>
+        </div>
+
+        <!-- macOS -->
+        <div class="tab-content" id="tab-mac">
+            <div class="install-step">
+                <div class="step-num">1</div>
+                <p>Download and extract the AIXER ZIP file to a folder, e.g. <code>~/Aixer</code></p>
+            </div>
+            <div class="install-step">
+                <div class="step-num">2</div>
+                <p>Open <strong>Terminal</strong> and navigate to the AIXER folder:</p>
+            </div>
+            <div class="code-block">cd ~/Aixer</div>
+            <div class="install-step">
+                <div class="step-num">3</div>
+                <p>Make the launcher executable:</p>
+            </div>
+            <div class="code-block">chmod +x ./bin/aixer</div>
+            <div class="install-step">
+                <div class="step-num">4</div>
+                <p>Run the installer:</p>
+            </div>
+            <div class="code-block">./bin/aixer install</div>
+            <div class="install-step">
+                <div class="step-num">alt</div>
+                <p><em>Optional:</em> Install as a Python package instead (if you have Python 3.8+ installed):</p>
+            </div>
+            <div class="code-block">python3 -m pip install -e .</div>
+            <div class="install-step">
+                <div class="step-num">5</div>
+                <p>Verify the installation:</p>
+            </div>
+            <div class="code-block">aixer --help</div>
+            <div class="install-step">
+                <div class="step-num">6</div>
+                <p>Create and build your first extension:</p>
+            </div>
+            <div class="code-block">aixer init MyExtension<br>cd MyExtension<br>aixer build</div>
+            <p style="font-size: 14px; color: #6b7280; margin-top: 8px;">Your built <code>.aix</code> file will be created in the <code>output</code> folder.</p>
+            <div class="note-box">
+                <strong>Important:</strong> The macOS launcher requires Python 3 to be available on your Mac. Check with <code>python3 --version</code>. If missing, install from <a href="https://www.python.org/downloads/macos/" style="color: #2563eb;">python.org</a>.<br><br>
+                <strong>Optional:</strong> Add AIXER to your PATH:<br>
+                <code>echo 'export PATH="$HOME/Aixer/bin:$PATH"' &gt;&gt; ~/.zshrc</code><br>
+                <code>source ~/.zshrc</code><br>
+                Then run <code>aixer</code> from any folder.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing">
+    <div class="container">
+        <h2 class="section-title">Choose Your Plan</h2>
+        <p class="section-subtitle">Get started with a free trial, then unlock all features with a premium license.</p>
+
+        <div class="pricing-trial">
+            <h3>&#x1F3C6; 1 Day Free Trial</h3>
+            <p>Try AIXER free for 1 day with full access to all features. No credit card required. Start building extensions immediately.</p>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="pricing-name">6 Months</div>
+                <div class="pricing-price">$69 <span>/ 6mo</span></div>
+                <div class="pricing-duration">Premium License</div>
+                <div class="pricing-desc">
+                    Full access to CLI, GUI Studio, all SDK presets, and updates for 6 months.
+                </div>
+                <a href="http://www.paypal.com/aixer_purchase_link" class="btn-pricing">Get Started</a>
+            </div>
+
+            <div class="pricing-card">
+                <div class="pricing-name">1 Year</div>
+                <div class="pricing-price">$99 <span>/ yr</span></div>
+                <div class="pricing-duration">Premium License</div>
+                <div class="pricing-desc">
+                    Everything in 6 months plan plus priority support, ProGuard/R8 release builds, and all future updates.
+                </div>
+                <a href="http://www.paypal.com/aixer_purchase_link" class="btn-pricing">Get Started</a>
+            </div>
+
+            <div class="pricing-card featured">
+                <div class="pricing-name">Lifetime</div>
+                <div class="pricing-price">$199 <span></span></div>
+                <div class="pricing-duration">Premium License</div>
+                <div class="pricing-desc">
+                    One-time payment. Lifetime access to AIXER, all features, all SDK presets, updates, and premium support.
+                </div>
+                <a href="http://www.paypal.com/aixer_purchase_link" class="btn-pricing featured-btn">Get Started</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Commands -->
+<section id="commands" style="background: #f8fafc;">
+    <div class="container">
+        <h2 class="section-title">Commands &amp; Usage</h2>
+        <p class="section-subtitle">Master AIXER with its complete set of CLI commands for building, managing, and deploying extensions.</p>
+
+        <table class="commands-table">
+            <thead>
+                <tr>
+                    <th>Command</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="cmd-name">aixer init</td>
+                    <td class="cmd-desc">Create a new extension project with optional SDK presets</td>
+                    <td><span class="cmd-example">aixer init MyExtension --sdk admob --sdk billing</span></td>
+                </tr>
+                <tr>
+                    <td class="cmd-name">aixer build</td>
+                    <td class="cmd-desc">Build extension into .aix file. Use <code>--release</code> for ProGuard/R8</td>
+                    <td><span class="cmd-example">aixer build --release --docs</span></td>
+                </tr>
+                <tr>
+                    <td class="cmd-name">aixer sync</td>
+                    <td class="cmd-desc">Download/sync all Maven/Gradle dependencies</td>
+                    <td><span class="cmd-example">aixer sync --clean</span></td>
+                </tr>
+                <tr>
+                    <td class="cmd-name">aixer doctor</td>
+                    <td class="cmd-desc">Audit your AIXER environment and current project</td>
+                    <td><span class="cmd-example">aixer doctor --json</span></td>
+                </tr>
+                <tr>
+                    <td class="cmd-name">aixer sdk</td>
+                    <td class="cmd-desc">Manage SDK presets (list, info, add, suggest)</td>
+                    <td><span class="cmd-example">aixer sdk list<br>aixer sdk add lottie billing<br>aixer sdk info admob</span></td>
+                </tr>
+                <tr>
+                    <td class="cmd-name">aixer migrate</td>
+                    <td class="cmd-desc">Convert FAST or Rush project to AIXER</td>
+                    <td><span class="cmd-example">aixer migrate --force</span></td>
+                </tr>
+                <tr>
+                    <td class="cmd-name">aixer xml</td>
+                    <td class="cmd-desc">Validate and normalize custom XML resources</td>
+                    <td><span class="cmd-example">aixer xml check<br>aixer xml normalize res/xml/foo.xml</span></td>
+                </tr>
+                <tr>
+                    <td class="cmd-name">aixer gui</td>
+                    <td class="cmd-desc">Launch AIXER Studio desktop GUI application</td>
+                    <td><span class="cmd-example">aixer gui</span></td>
+                </tr>
+                <tr>
+                    <td class="cmd-name">aixer install</td>
+                    <td class="cmd-desc">Install Python, JDK, and AIXER build tools</td>
+                    <td><span class="cmd-example">aixer install</span></td>
+                </tr>
+                <tr>
+                    <td class="cmd-name">aixer update</td>
+                    <td class="cmd-desc">Update AIXER to the latest version</td>
+                    <td><span class="cmd-example">aixer update<br>aixer update --pip</span></td>
+                </tr>
+                <tr>
+                    <td class="cmd-name">aixer activate</td>
+                    <td class="cmd-desc">Register email or refresh AIXER license</td>
+                    <td><span class="cmd-example">aixer activate --email user@example.com</span></td>
+                </tr>
+                <tr>
+                    <td class="cmd-name">aixer license</td>
+                    <td class="cmd-desc">Show current license status</td>
+                    <td><span class="cmd-example">aixer license</span></td>
+                </tr>
+                <tr>
+                    <td class="cmd-name">aixer setup</td>
+                    <td class="cmd-desc">Download required global JARs (android.jar, simple_components.jar)</td>
+                    <td><span class="cmd-example">aixer setup</span></td>
+                </tr>
+                <tr>
+                    <td class="cmd-name">aixer global-jar</td>
+                    <td class="cmd-desc">Manage global JARs shared across all projects</td>
+                    <td><span class="cmd-example">aixer global-jar list<br>aixer global-jar add mylib.jar<br>aixer global-jar remove mylib.jar</span></td>
+                </tr>
+                <tr>
+                    <td class="cmd-name">aixer dex</td>
+                    <td class="cmd-desc">Dex a JAR using D8/R8 from bundled tools</td>
+                    <td><span class="cmd-example">aixer dex input.jar --output output.jar</span></td>
+                </tr>
+                <tr>
+                    <td class="cmd-name">aixer tools</td>
+                    <td class="cmd-desc">Manage optional build tools (rt.jar, desugar.jar, etc.)</td>
+                    <td><span class="cmd-example">aixer tools status<br>aixer tools get rt.jar</span></td>
+                </tr>
+                <tr>
+                    <td class="cmd-name">aixer uninstall</td>
+                    <td class="cmd-desc">Uninstall AIXER and remove local cached data</td>
+                    <td><span class="cmd-example">aixer uninstall --yes</span></td>
+                </tr>
+                <tr>
+                    <td class="cmd-name">aixer version</td>
+                    <td class="cmd-desc">Show AIXER version</td>
+                    <td><span class="cmd-example">aixer version</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- Project Guide -->
+<section id="project-guide">
+    <div class="container">
+        <h2 class="section-title">Project Guide</h2>
+        <p class="section-subtitle">Understand the AIXER project structure, key configuration files, and how to edit them for your extensions.</p>
+
+        <!-- Project Structure -->
+        <div class="guide-card">
+            <div class="guide-card-header">&#x1F4C1; Project Structure</div>
+            <div class="guide-card-body">
+                <p>When you run <code class="inline-code">aixer init MyExtension</code>, AIXER generates the following project layout:</p>
+                <div class="file-structure">MyExtension/
+  <span class="dir">&#x1F4C4; aixer.yml</span>              <span class="annotation"># Main project configuration</span>
+  <span class="dir">&#x1F4C1; src/</span>
+    <span class="arrow">&#x2514;</span> <span class="dir">io/aixer/myextension/</span>
+      <span class="arrow">&#x2514;</span> <span class="file">MyExtension.java</span>     <span class="annotation"># Your extension source code</span>
+  <span class="dir">&#x1F4C1; deps/</span>
+    <span class="arrow">&#x251C;</span> <span class="dir">jars/</span>                   <span class="annotation"># Local JAR dependencies</span>
+    <span class="arrow">&#x2514;</span> <span class="dir">aars/</span>                   <span class="annotation"># Local AAR dependencies</span>
+  <span class="dir">&#x1F4C1; output/</span>                   <span class="annotation"># Built .aix files go here</span>
+  <span class="dir">&#x1F4C1; assets/</span>
+    <span class="arrow">&#x2514;</span> <span class="file">icon.png</span>                <span class="annotation"># Extension icon (32x32)</span>
+  <span class="dir">&#x1F4C1; xml/</span>                       <span class="annotation"># Custom XML resources</span>
+  <span class="file">.gitignore</span>
+  <span class="file">README.md</span>
+  <span class="dir">&#x1F4C1; .github/workflows/</span>
+    <span class="arrow">&#x2514;</span> <span class="file">build-extension.yml</span>   <span class="annotation"># GitHub Actions CI</span></div>
+
+                <div class="edit-tip"><strong>Key takeaway:</strong> Your Java source goes in <code class="inline-code">src/</code>, dependencies go in <code class="inline-code">deps/</code>, custom XML in <code class="inline-code">xml/</code>, and the built extension lands in <code class="inline-code">output/</code>. All configuration is centralized in <code class="inline-code">aixer.yml</code>.</div>
+            </div>
+        </div>
+
+        <!-- Java Source (AdmobAdsPro.java) -->
+        <div class="guide-card">
+            <div class="guide-card-header">&#x1F4D2; Java Source File (AdmobAdsPro.java / YourExtension.java)</div>
+            <div class="guide-card-body">
+                <p>Your extension's main Java class extends <code class="inline-code">AndroidNonvisibleComponent</code> and uses App Inventor annotations. Here is a typical AdMob extension as an example:</p>
+
+                <div class="code-block">package io.aixer.myextension;
+
+import com.google.appinventor.components.annotations.DesignerComponent;
+import com.google.appinventor.components.annotations.SimpleFunction;
+import com.google.appinventor.components.annotations.SimpleObject;
+import com.google.appinventor.components.annotations.UsesLibraries;
+import com.google.appinventor.components.annotations.UsesPermissions;
+import com.google.appinventor.components.common.ComponentCategory;
+import com.google.appinventor.components.runtime.AndroidNonvisibleComponent;
+import com.google.appinventor.components.runtime.ComponentContainer;
+
+@DesignerComponent(
+    version = 1,
+    description = "AdMob Ads extension built with Aixer.",
+    category = ComponentCategory.EXTENSION,
+    nonVisible = true,
+    iconName = "aiwebres/icon.png"
+)
+@SimpleObject(external = true)
+@UsesPermissions(permissionNames = "android.permission.INTERNET, android.permission.ACCESS_NETWORK_STATE")
+@UsesLibraries(libraries = "admob.jar")
+public class AdmobAdsPro extends AndroidNonvisibleComponent {
+
+    public AdmobAdsPro(ComponentContainer container) {
+        super(container.$form());
+    }
+
+    @SimpleFunction(description = "Load a banner ad.")
+    public void LoadBannerAd(String adUnitId) {
+        // Your AdMob logic here
+    }
+
+    @SimpleFunction(description = "Show interstitial ad.")
+    public void ShowInterstitial(String adUnitId) {
+        // Your interstitial logic here
+    }
+}</div>
+
+                <h4>What to change and why</h4>
+                <table class="field-table">
+                    <tr>
+                        <th>Element</th>
+                        <th>Change</th>
+                        <th>Why</th>
+                    </tr>
+                    <tr>
+                        <td class="f-name">package</td>
+                        <td class="f-desc">Set to your unique package name, e.g. <code class="inline-code">com.yourcompany.yourext</code></td>
+                        <td class="f-desc">Uniquely identifies your extension in App Inventor</td>
+                    </tr>
+                    <tr>
+                        <td class="f-name">@DesignerComponent(version)</td>
+                        <td class="f-desc">Increment when you publish updates</td>
+                        <td class="f-desc">Tells App Inventor to update the component</td>
+                    </tr>
+                    <tr>
+                        <td class="f-name">@DesignerComponent(description)</td>
+                        <td class="f-desc">Describe what your extension does</td>
+                        <td class="f-desc">Shown to users in the App Inventor palette</td>
+                    </tr>
+                    <tr>
+                        <td class="f-name">className</td>
+                        <td class="f-desc">Rename your class (e.g. <code class="inline-code">AdmobAdsPro</code>)</td>
+                        <td class="f-desc">Must be unique; becomes the component name in App Inventor</td>
+                    </tr>
+                    <tr>
+                        <td class="f-name">@UsesPermissions</td>
+                        <td class="f-desc">Add Android permissions your extension needs</td>
+                        <td class="f-desc">Required for accessing device features (Internet, Camera, etc.)</td>
+                    </tr>
+                    <tr>
+                        <td class="f-name">@UsesLibraries</td>
+                        <td class="f-desc">Reference library JARs your extension depends on</td>
+                        <td class="f-desc">Ensures required libraries are bundled in the .aix</td>
+                    </tr>
+                    <tr>
+                        <td class="f-name">@SimpleFunction</td>
+                        <td class="f-desc">Add methods with this annotation</td>
+                        <td class="f-desc">Each annotated method becomes a block in App Inventor</td>
+                    </tr>
+                </table>
+
+                <div class="edit-tip"><strong>Note:</strong> You can also use <code class="inline-code">@SimpleEvent</code> to fire events back to App Inventor, <code class="inline-code">@SimpleProperty</code> for properties, and <code class="inline-code">@Options</code> for dropdown helper blocks. Use <code class="inline-code">aixer init --lang kotlin</code> to generate a Kotlin version instead.</div>
+            </div>
+        </div>
+
+        <!-- aixer.yml -->
+        <div class="guide-card">
+            <div class="guide-card-header">&#x2699;&#xFE0F; aixer.yml — Main Configuration File</div>
+            <div class="guide-card-body">
+                <p>This is the central configuration file for your AIXER project. AIXER reads this file to understand how to build your extension, what dependencies to resolve, and which tools to use.</p>
+
+                <div class="code-block"># aixer.yml — Aixer project configuration
+name: MyExtension                  # Extension name
+package: io.aixer.myextension      # Java package name
+version: 1                         # Version code (integer)
+version_name: "1"                  # Version name (string)
+language: java                     # Source language: java or kotlin
+min_sdk: 21                        # Minimum Android SDK version
+description: "MyExtension built with Aixer."
+proguard: false                    # Enable ProGuard shrinking
+authors:
+  - Aixer Creator
+help_url: https://aixer.dev/docs
+icon: icon.png
+
+dependencies:
+  resolver: auto                   # Dependency resolver: auto, maven, or gradle
+  remote:                          # Remote Maven dependencies
+    - com.google.android.gms:play-services-ads:23.6.0
+    - com.android.billingclient:billing:7.1.1
+  local_jars: []                   # Local JAR files in deps/jars/
+  local_aars: []                   # Local AAR files in deps/aars/
+
+tools:
+  processor: auto                  # Annotation processor
+  tools_jar: auto                  # JDK tools.jar
+  desugar: auto                    # Java desugaring tool
+  jetifier: auto                   # AndroidX migration tool
+
+xmls: []                           # Custom XML resource mapping
+auto_include_xml: true             # Auto-include xml/ folder
+strip_annotations: true            # Strip compile-time annotations
+generate_docs: false               # Auto-generate docs on build
+sdks: []                           # SDK preset IDs</div>
+
+                <h4>Key fields explained &mdash; what to change and why</h4>
+                <table class="field-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>What to Change</th>
+                        <th>Why</th>
+                    </tr>
+                    <tr>
+                        <td class="f-name">name</td>
+                        <td class="f-desc">Set to your extension name, e.g. <code class="inline-code">AdmobAdsPro</code></td>
+                        <td class="f-desc">Used as the output filename (<code class="inline-code">AdmobAdsPro.aix</code>) and component name</td>
+                    </tr>
+                    <tr>
+                        <td class="f-name">package</td>
+                        <td class="f-desc">Your unique Java package, e.g. <code class="inline-code">com.yourcompany.ads</code></td>
+                        <td class="f-desc">Must match the <code class="inline-code">package</code> in your Java file. Prevents conflicts with other extensions</td>
+                    </tr>
+                    <tr>
+                        <td class="f-name">version / version_name</td>
+                        <td class="f-desc">Increment <code class="inline-code">version</code> (integer) for each release; <code class="inline-code">version_name</code> is the display string</td>
+                        <td class="f-desc">Users see version_name; code uses version to check for updates</td>
+                    </tr>
+                    <tr>
+                        <td class="f-name">language</td>
+                        <td class="f-desc"><code class="inline-code">java</code> or <code class="inline-code">kotlin</code></td>
+                        <td class="f-desc">Tells AIXER which compiler to use. Must match your source code language</td>
+                    </tr>
+                    <tr>
+                        <td class="f-name">proguard</td>
+                        <td class="f-desc">Set <code class="inline-code">true</code> for release builds</td>
+                        <td class="f-desc">Shrinks and obfuscates your extension code. Use <code class="inline-code">aixer build --release</code> to activate</td>
+                    </tr>
+                    <tr>
+                        <td class="f-name">dependencies.remote</td>
+                        <td class="f-desc">List Maven coordinates: <code class="inline-code">group:artifact:version</code></td>
+                        <td class="f-desc">AIXER downloads these automatically during <code class="inline-code">aixer sync</code>. Add your SDK dependencies here</td>
+                    </tr>
+                    <tr>
+                        <td class="f-name">dependencies.local_jars</td>
+                        <td class="f-desc">List JAR filenames placed in <code class="inline-code">deps/jars/</code></td>
+                        <td class="f-desc">For dependencies you've downloaded manually. AIXER bundles them into the .aix</td>
+                    </tr>
+                    <tr>
+                        <td class="f-name">xmls</td>
+                        <td class="f-desc">Map XML source files: <code class="inline-code">source: xml/file.xml, target: xml/file.xml</code></td>
+                        <td class="f-desc">Custom XML resources like FileProvider paths, ExoPlayer layouts. The target must NOT start with <code class="inline-code">res/</code> (App Inventor adds it). Use <code class="inline-code">aixer xml check</code> to validate</td>
+                    </tr>
+                    <tr>
+                        <td class="f-name">strip_annotations</td>
+                        <td class="f-desc">Keep <code class="inline-code">true</code> (default)</td>
+                        <td class="f-desc">Removes compile-time annotations from bytecode, resulting in a smaller .aix file</td>
+                    </tr>
+                    <tr>
+                        <td class="f-name">sdks</td>
+                        <td class="f-desc">Add preset IDs like <code class="inline-code">admob</code>, <code class="inline-code">billing</code>, <code class="inline-code">lottie</code></td>
+                        <td class="f-desc">Pre-configures dependencies, ProGuard rules, and manifest entries. Use <code class="inline-code">aixer sdk list</code> to see all available presets</td>
+                    </tr>
+                </table>
+
+                <div class="edit-highlight"><strong>Common mistake:</strong> Forgetting to run <code class="inline-code">aixer sync</code> after adding new dependencies in <code class="inline-code">dependencies.remote</code>. Always run sync before building!</div>
+            </div>
+        </div>
+
+        <!-- aixer_jars.yml -->
+        <div class="guide-card">
+            <div class="guide-card-header">&#x1F4E6; aixer_jars.yml — JAR Whitelist / Blacklist</div>
+            <div class="guide-card-body">
+                <p>This file is auto-generated by <code class="inline-code">aixer build</code> and controls which JARs are included in or excluded from your final <code class="inline-code">.aix</code> file. You can edit it to fine-tune the content of your extension package.</p>
+
+                <div class="code-block"># aixer_jars.yml — JAR inclusion decisions
+# whitelist = JARs to include in the AIX.
+# blacklist = JARs to exclude from the AIX.
+# Generated by `aixer build`. You may edit this file.
+
+whitelist:
+  - play-services-ads-lite
+  - play-services-ads-base
+  - billingclient
+
+blacklist:
+  - kotlin-stdlib
+  - kotlinx-coroutines
+  - annotations</div>
+
+                <h4>How to edit &mdash; what to change and why</h4>
+                <table class="field-table">
+                    <tr>
+                        <th>Section</th>
+                        <th>Usage</th>
+                        <th>Why</th>
+                    </tr>
+                    <tr>
+                        <td class="f-name">whitelist</td>
+                        <td class="f-desc">Add partial JAR names to <strong>force include</strong> them in the .aix</td>
+                        <td class="f-desc">Use when AIXER's auto-detection misses a required library. The name is matched as a substring against all resolved JAR filenames</td>
+                    </tr>
+                    <tr>
+                        <td class="f-name">blacklist</td>
+                        <td class="f-desc">Add partial JAR names to <strong>exclude</strong> them from the .aix</td>
+                        <td class="f-desc">Use to strip unwanted libraries (e.g. <code class="inline-code">kotlin-stdlib</code> if the user already has it, or documentation JARs). Reduces .aix file size</td>
+                    </tr>
+                </table>
+
+                <div class="edit-tip"><strong>Tip:</strong> You can change the output path of this file by adding <code class="inline-code">jars_config: aixer_jars.yml</code> to your <code class="inline-code">aixer.yml</code>. Delete this file to regenerate it from scratch on the next build.</div>
+            </div>
+        </div>
+
+        <!-- AndroidManifest.xml -->
+        <div class="guide-card">
+            <div class="guide-card-header">&#x1F4F1; AndroidManifest.xml — App Permissions &amp; Components</div>
+            <div class="guide-card-body">
+                <p>AIXER generates the <code class="inline-code">AndroidManifest.xml</code> automatically based on your source code imports and <code class="inline-code">aixer.yml</code> configuration. The generated file is embedded inside the <code class="inline-code">.aix</code> package.</p>
+
+                <div class="code-block">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.aixer.myextension"&gt;
+
+    &lt;uses-permission android:name="android.permission.INTERNET" /&gt;
+    &lt;uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /&gt;
+
+    &lt;application&gt;
+        &lt;meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" /&gt;
+
+        &lt;!-- Aixer auto-manages manifest entries.
+             Do NOT edit the generated file manually. --&gt;
+    &lt;/application&gt;
+&lt;/manifest&gt;</div>
+
+                <h4>How it works &mdash; what to do</h4>
+                <table class="field-table">
+                    <tr>
+                        <th>Scenario</th>
+                        <th>What to Do</th>
+                        <th>Why</th>
+                    </tr>
+                    <tr>
+                        <td class="f-name">Permission needed (e.g. Camera, Internet)</td>
+                        <td class="f-desc">Add <code class="inline-code">@UsesPermissions</code> annotation to your Java class, OR ensure the import is present in your source code</td>
+                        <td class="f-desc">AIXER scans imports and annotations, then auto-adds the corresponding permission to the manifest. See the import-to-manifest mapping for 20+ common SDKs</td>
+                    </tr>
+                    <tr>
+                        <td class="f-name">Activity / Service required</td>
+                        <td class="f-desc">Add the <code class="inline-code">&lt;activity&gt;</code> or <code class="inline-code">&lt;service&gt;</code> entry in <code class="inline-code">aixer.yml</code> under a custom manifest section, or ensure the import auto-detection maps to it</td>
+                        <td class="f-desc">Components like FirebaseMessagingService or BarcodeScanner require activity/service declarations. AIXER auto-detects these from common import patterns</td>
+                    </tr>
+                    <tr>
+                        <td class="f-name">Custom meta-data needed</td>
+                        <td class="f-desc">Let AIXER auto-detect it, or add to source annotations</td>
+                        <td class="f-desc">e.g. <code class="inline-code">com.google.android.gms.version</code> is auto-added when AdMob imports are detected. No manual editing needed</td>
+                    </tr>
+                    <tr>
+                        <td class="f-name">AIXER missing a manifest entry</td>
+                        <td class="f-desc">Report it as a feature request, or add the import that triggers it</td>
+                        <td class="f-desc">AIXER's built-in import-to-manifest map covers AdMob, Maps, Firebase, BarcodeScanner, Bluetooth, Location, NFC, Camera, and more</td>
+                    </tr>
+                </table>
+
+                <h4>Auto-detected import &rarr; manifest mappings</h4>
+                <table class="field-table">
+                    <tr>
+                        <th>Import Pattern</th>
+                        <th>Permissions Added</th>
+                        <th>Components / Features</th>
+                    </tr>
+                    <tr><td class="f-name">com.google.android.gms.ads.*</td><td>INTERNET, ACCESS_NETWORK_STATE</td><td>gms.version meta-data</td></tr>
+                    <tr><td class="f-name">com.google.firebase.messaging.*</td><td>INTERNET, RECEIVE_BOOT_COMPLETED</td><td>FirebaseMessagingService</td></tr>
+                    <tr><td class="f-name">com.journeyapps.barcodescanner.*</td><td>CAMERA</td><td>camera, camera.autofocus features</td></tr>
+                    <tr><td class="f-name">android.bluetooth.*</td><td>BLUETOOTH, BLUETOOTH_ADMIN, BLUETOOTH_CONNECT, BLUETOOTH_SCAN</td><td>bluetooth feature</td></tr>
+                    <tr><td class="f-name">android.location.*</td><td>ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION</td><td>--</td></tr>
+                    <tr><td class="f-name">android.hardware.camera2.*</td><td>CAMERA</td><td>camera feature</td></tr>
+                    <tr><td class="f-name">android.nfc.*</td><td>NFC</td><td>nfc feature</td></tr>
+                    <tr><td class="f-name">com.squareup.okhttp3.*</td><td>INTERNET</td><td>--</td></tr>
+                    <tr><td class="f-name">com.airbnb.lottie.*</td><td>INTERNET</td><td>--</td></tr>
+                    <tr><td class="f-name">androidx.media3.*</td><td>INTERNET, ACCESS_NETWORK_STATE</td><td>--</td></tr>
+                </table>
+
+                <div class="edit-highlight"><strong>Important:</strong> Do NOT edit the generated AndroidManifest.xml directly. AIXER regenerates it on every build. Instead, use <code class="inline-code">@UsesPermissions</code> annotations in your Java code and add dependencies in <code class="inline-code">aixer.yml</code>. AIXER handles the rest automatically.</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Requirements -->
+<section id="requirements">
+    <div class="container">
+        <h2 class="section-title">Requirements</h2>
+        <p class="section-subtitle">AIXER is lightweight and works with standard development tools.</p>
+        <div style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;">
+            <div style="background: #f8fafc; border: 1px solid #eaeef2; border-radius: 16px; padding: 28px; text-align: center; min-width: 180px;">
+                <div style="font-size: 36px; margin-bottom: 8px;">&#x1F40D;</div>
+                <h3 style="font-size: 16px; font-weight: 600;">Python 3.8+</h3>
+                <p style="font-size: 13px; color: #6b7280;">Bundled with Windows installer</p>
+            </div>
+            <div style="background: #f8fafc; border: 1px solid #eaeef2; border-radius: 16px; padding: 28px; text-align: center; min-width: 180px;">
+                <div style="font-size: 36px; margin-bottom: 8px;">&#x2615;</div>
+                <h3 style="font-size: 16px; font-weight: 600;">JDK 8+</h3>
+                <p style="font-size: 13px; color: #6b7280;">JDK 17 recommended (auto-installed)</p>
+            </div>
+            <div style="background: #f8fafc; border: 1px solid #eaeef2; border-radius: 16px; padding: 28px; text-align: center; min-width: 180px;">
+                <div style="font-size: 36px; margin-bottom: 8px;">&#x1F5A5;&#xFE0F;</div>
+                <h3 style="font-size: 16px; font-weight: 600;">Windows / Linux / macOS</h3>
+                <p style="font-size: 13px; color: #6b7280;">Fully cross-platform</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" style="background: #f8fafc;">
+    <div class="container" style="text-align: center;">
+        <h2 class="section-title">Get Help</h2>
+        <p class="section-subtitle">Have questions or need support? We're here to help.</p>
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+            <a href="https://wa.me/919999999998" class="btn btn-whatsapp">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Contact via WhatsApp
+            </a>
+            <a href="http://www.paypal.com/aixer_purchase_link" class="btn btn-green">Purchase License</a>
+            <a href="http://www.aixer.com/aixer.zip" class="btn btn-primary">Download AIXER</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>AIXER &mdash; AIX Extension Builder for App Inventor, Kodular, Niotron. Developed by Bharat Technologies.</p>
+        <p style="margin-top: 8px;">&copy; 2025 Abhinav Pandey. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+    // Tab switching
+    const tabs = document.querySelectorAll('#installTabs .tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            const target = tab.dataset.tab;
+            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+            document.getElementById('tab-' + target).classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
