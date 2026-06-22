@@ -796,8 +796,6 @@ import com.google.appinventor.components.runtime.ComponentContainer;
     iconName = "aiwebres/icon.png"
 )
 @SimpleObject(external = true)
-@UsesPermissions(permissionNames = "android.permission.INTERNET, android.permission.ACCESS_NETWORK_STATE")
-@UsesLibraries(libraries = "admob.jar")
 public class AdmobAdsPro extends AndroidNonvisibleComponent {
 
     public AdmobAdsPro(ComponentContainer container) {
@@ -1014,73 +1012,7 @@ blacklist:
         <div class="guide-card">
             <div class="guide-card-header">&#x1F4F1; AndroidManifest.xml — App Permissions &amp; Components</div>
             <div class="guide-card-body">
-                <p>AIXER generates the <code class="inline-code">AndroidManifest.xml</code> automatically based on your source code imports and <code class="inline-code">aixer.yml</code> configuration. The generated file is embedded inside the <code class="inline-code">.aix</code> package.</p>
-
-                <div class="code-block">&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.aixer.myextension"&gt;
-
-    &lt;uses-permission android:name="android.permission.INTERNET" /&gt;
-    &lt;uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /&gt;
-
-    &lt;application&gt;
-        &lt;meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" /&gt;
-
-        &lt;!-- Aixer auto-manages manifest entries.
-             Do NOT edit the generated file manually. --&gt;
-    &lt;/application&gt;
-&lt;/manifest&gt;</div>
-
-                <h4>How it works &mdash; what to do</h4>
-                <table class="field-table">
-                    <tr>
-                        <th>Scenario</th>
-                        <th>What to Do</th>
-                        <th>Why</th>
-                    </tr>
-                    <tr>
-                        <td class="f-name">Permission needed (e.g. Camera, Internet)</td>
-                        <td class="f-desc">Add <code class="inline-code">@UsesPermissions</code> annotation to your Java class, OR ensure the import is present in your source code</td>
-                        <td class="f-desc">AIXER scans imports and annotations, then auto-adds the corresponding permission to the manifest. See the import-to-manifest mapping for 20+ common SDKs</td>
-                    </tr>
-                    <tr>
-                        <td class="f-name">Activity / Service required</td>
-                        <td class="f-desc">Add the <code class="inline-code">&lt;activity&gt;</code> or <code class="inline-code">&lt;service&gt;</code> entry in <code class="inline-code">aixer.yml</code> under a custom manifest section, or ensure the import auto-detection maps to it</td>
-                        <td class="f-desc">Components like FirebaseMessagingService or BarcodeScanner require activity/service declarations. AIXER auto-detects these from common import patterns</td>
-                    </tr>
-                    <tr>
-                        <td class="f-name">Custom meta-data needed</td>
-                        <td class="f-desc">Let AIXER auto-detect it, or add to source annotations</td>
-                        <td class="f-desc">e.g. <code class="inline-code">com.google.android.gms.version</code> is auto-added when AdMob imports are detected. No manual editing needed</td>
-                    </tr>
-                    <tr>
-                        <td class="f-name">AIXER missing a manifest entry</td>
-                        <td class="f-desc">Report it as a feature request, or add the import that triggers it</td>
-                        <td class="f-desc">AIXER's built-in import-to-manifest map covers AdMob, Maps, Firebase, BarcodeScanner, Bluetooth, Location, NFC, Camera, and more</td>
-                    </tr>
-                </table>
-
-                <h4>Auto-detected import &rarr; manifest mappings</h4>
-                <table class="field-table">
-                    <tr>
-                        <th>Import Pattern</th>
-                        <th>Permissions Added</th>
-                        <th>Components / Features</th>
-                    </tr>
-                    <tr><td class="f-name">com.google.android.gms.ads.*</td><td>INTERNET, ACCESS_NETWORK_STATE</td><td>gms.version meta-data</td></tr>
-                    <tr><td class="f-name">com.google.firebase.messaging.*</td><td>INTERNET, RECEIVE_BOOT_COMPLETED</td><td>FirebaseMessagingService</td></tr>
-                    <tr><td class="f-name">com.journeyapps.barcodescanner.*</td><td>CAMERA</td><td>camera, camera.autofocus features</td></tr>
-                    <tr><td class="f-name">android.bluetooth.*</td><td>BLUETOOTH, BLUETOOTH_ADMIN, BLUETOOTH_CONNECT, BLUETOOTH_SCAN</td><td>bluetooth feature</td></tr>
-                    <tr><td class="f-name">android.location.*</td><td>ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION</td><td>--</td></tr>
-                    <tr><td class="f-name">android.hardware.camera2.*</td><td>CAMERA</td><td>camera feature</td></tr>
-                    <tr><td class="f-name">android.nfc.*</td><td>NFC</td><td>nfc feature</td></tr>
-                    <tr><td class="f-name">com.squareup.okhttp3.*</td><td>INTERNET</td><td>--</td></tr>
-                    <tr><td class="f-name">com.airbnb.lottie.*</td><td>INTERNET</td><td>--</td></tr>
-                    <tr><td class="f-name">androidx.media3.*</td><td>INTERNET, ACCESS_NETWORK_STATE</td><td>--</td></tr>
-                </table>
-
+                <p>You can add permissions, activities etc. directly to AndroidManifest.xml file.</p>
             </div>
         </div>
 
