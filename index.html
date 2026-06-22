@@ -272,11 +272,17 @@
             font-size: 14px;
         }
 
+        /* Hamburger */
+        .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; background: none; border: none; padding: 4px; }
+        .hamburger span { width: 24px; height: 2px; background: #1a1a2e; border-radius: 2px; transition: all 0.2s; }
+
         /* Responsive */
         @media (max-width: 768px) {
             .hero { padding: 60px 0 40px; }
             .features-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(255,255,255,0.98); backdrop-filter: blur(12px); padding: 16px 24px; border-bottom: 1px solid #eaeef2; gap: 12px; }
+            .nav-links.open { display: flex; }
+            .hamburger { display: flex; }
             .commands-table { font-size: 13px; }
         }
     </style>
@@ -293,6 +299,9 @@
             <a href="#commands">Commands</a>
             <a href="#project-guide">Project Guide</a>
             <a href="#contact">Contact</a>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </div>
 </nav>
@@ -302,7 +311,7 @@
     <div class="container">
         <img src="https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/x2q917cyweuBOrrmFDYjUIcPTTtLKXBq_e2848b3bd01882807f829d8146c7b827fac98eb8d3f2445008fbebc86b634f0d.png" alt="AIXER Logo" style="height: 240px; margin-bottom: 12px;">
         <p style="font-size: 18px; font-weight: 700; color: #1a1a2e; letter-spacing: 1px; margin-bottom: 20px; text-transform: uppercase;">Automated Extension Building, No More Manual Hustle</p>
-        <h1>AIXER &mdash; Empowers Kids To Build Extensions</h1>
+        <h1>AIXER &mdash; Empowers Everyone To Build Extensions</h1>
         <p style="font-size: clamp(14px, 1.75vw, 22px); font-weight: 500; color: #6b7280; max-width: 700px; margin: 0 auto 20px; line-height: 1.5;">Make Extensions For App Inventor, Kodular, Niotron &amp; Other AI2 Based No-code App Builders.</p>
         <p>
             AIXER is a powerful build system for MIT App Inventor extensions. Create dependency-based
@@ -314,11 +323,11 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 Download AIXER
             </a>
-            <a href="http://www.paypal.com/aixer_purchase_link" class="btn btn-green">
+            <a href="https://www.paypal.com/ncp/payment/QB6J8MEH3ERD2" class="btn btn-green">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                 Purchase License
             </a>
-            <a href="https://wa.me/919999999998" class="btn btn-whatsapp">
+            <a href="https://wa.me/919175016427" class="btn btn-whatsapp">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 Contact Support
             </a>
@@ -439,13 +448,18 @@
             </div>
             <div class="feature-card">
                 <div class="feature-icon">&#x1F4F6;</div>
-                <h3>Auto-Update System</h3>
-                <p>Update AIXER to the latest version with <code>aixer update</code>. Firebase-powered update distribution.</p>
+                <h3>Future Updates</h3>
+                <p>Update AIXER to the latest version with <code>aixer update</code>.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">&#x1F3C6;</div>
                 <h3>GitHub Actions CI</h3>
                 <p>Automatically generated GitHub Actions workflow on <code>init</code> for continuous integration.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#x1F9EA;</div>
+                <h3>Smart Auto Build Pipeline</h3>
+                <p>AIXER is smart enough to automatically handle to bring the extensions in your hands with its smart auto proguard rules handling, shrinking and sdks' jar packaging capabilities.</p>
             </div>
         </div>
     </div>
@@ -602,34 +616,14 @@
         </div>
 
         <div class="pricing-grid">
-            <div class="pricing-card">
-                <div class="pricing-name">6 Months</div>
-                <div class="pricing-price">$69 <span>/ 6mo</span></div>
-                <div class="pricing-duration">Premium License</div>
-                <div class="pricing-desc">
-                    Full access to CLI, GUI Studio, all SDK presets, and updates for 6 months.
-                </div>
-                <a href="http://www.paypal.com/aixer_purchase_link" class="btn-pricing">Get Started</a>
-            </div>
-
-            <div class="pricing-card">
-                <div class="pricing-name">1 Year</div>
-                <div class="pricing-price">$99 <span>/ yr</span></div>
-                <div class="pricing-duration">Premium License</div>
-                <div class="pricing-desc">
-                    Everything in 6 months plan plus priority support, ProGuard/R8 release builds, and all future updates.
-                </div>
-                <a href="http://www.paypal.com/aixer_purchase_link" class="btn-pricing">Get Started</a>
-            </div>
-
             <div class="pricing-card featured">
                 <div class="pricing-name">Lifetime</div>
-                <div class="pricing-price">$199 <span></span></div>
+                <div class="pricing-price">$99 <span></span></div>
                 <div class="pricing-duration">Premium License</div>
                 <div class="pricing-desc">
                     One-time payment. Lifetime access to AIXER, all features, all SDK presets, updates, and premium support.
                 </div>
-                <a href="http://www.paypal.com/aixer_purchase_link" class="btn-pricing featured-btn">Get Started</a>
+                <a href="https://www.paypal.com/ncp/payment/QB6J8MEH3ERD2" class="btn-pricing featured-btn">Get Started</a>
             </div>
         </div>
     </div>
@@ -1087,7 +1081,6 @@ blacklist:
                     <tr><td class="f-name">androidx.media3.*</td><td>INTERNET, ACCESS_NETWORK_STATE</td><td>--</td></tr>
                 </table>
 
-                <div class="edit-highlight"><strong>Important:</strong> Do NOT edit the generated AndroidManifest.xml directly. AIXER regenerates it on every build. Instead, use <code class="inline-code">@UsesPermissions</code> annotations in your Java code and add dependencies in <code class="inline-code">aixer.yml</code>. AIXER handles the rest automatically.</div>
             </div>
         </div>
 
@@ -1125,11 +1118,11 @@ blacklist:
         <h2 class="section-title">Get Help</h2>
         <p class="section-subtitle">Have questions or need support? We're here to help.</p>
         <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-            <a href="https://wa.me/919999999998" class="btn btn-whatsapp">
+            <a href="https://wa.me/919175016427" class="btn btn-whatsapp">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 Contact via WhatsApp
             </a>
-            <a href="http://www.paypal.com/aixer_purchase_link" class="btn btn-green">Purchase License</a>
+            <a href="https://www.paypal.com/ncp/payment/QB6J8MEH3ERD2" class="btn btn-green">Purchase License</a>
             <a href="http://www.aixer.com/aixer.zip" class="btn btn-primary">Download AIXER</a>
         </div>
     </div>
@@ -1138,11 +1131,16 @@ blacklist:
 <footer>
     <div class="container">
         <p>AIXER &mdash; AIX Extension Builder for App Inventor, Kodular, Niotron. Developed by Bharat Technologies.</p>
-        <p style="margin-top: 8px;">&copy; 2025 Abhinav Pandey. All rights reserved.</p>
+        <p style="margin-top: 8px;">&copy; 2025 Bharat Technologies. All rights reserved.</p>
     </div>
 </footer>
 
 <script>
+    // Hamburger toggle
+    document.getElementById('hamburger').addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.toggle('open');
+    });
+
     // Tab switching
     const tabs = document.querySelectorAll('#installTabs .tab');
     tabs.forEach(tab => {
