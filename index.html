@@ -8,6 +8,13 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
+        @keyframes flash {
+            0% { opacity: 1; background-position: 0% 50%; }
+            25% { opacity: 0.85; }
+            50% { opacity: 1; background-position: 100% 50%; }
+            75% { opacity: 0.9; }
+            100% { opacity: 1; background-position: 0% 50%; }
+        }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: #ffffff;
@@ -305,6 +312,10 @@
         </div>
     </div>
 </nav>
+
+<div style="background: linear-gradient(270deg, #2563eb, #7c3aed, #ec4899, #2563eb); background-size: 400% 400%; color: #fff; text-align: center; padding: 12px 24px; font-size: 15px; font-weight: 600; letter-spacing: 0.3px; animation: flash 3s ease-in-out infinite;">
+    Coming soon in next update: AI Integration To Automate Everything :)
+</div>
 
 <!-- Hero -->
 <section class="hero">
