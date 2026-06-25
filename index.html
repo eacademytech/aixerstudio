@@ -313,10 +313,6 @@
     </div>
 </nav>
 
-<div style="background: linear-gradient(270deg, #2563eb, #7c3aed, #ec4899, #2563eb); background-size: 400% 400%; color: #fff; text-align: center; padding: 12px 24px; font-size: 15px; font-weight: 600; letter-spacing: 0.3px; animation: flash 3s ease-in-out infinite;">
-    Coming soon in next update: AI Integration To Automate Everything :)
-</div>
-
 <!-- Hero -->
 <section class="hero">
     <div class="container">
@@ -330,7 +326,7 @@
             and a reproducible packaging pipeline.
         </p>
         <div class="hero-buttons">
-            <a href="https://www.dropbox.com/scl/fi/c2e2g0xkzqdalalltublg/AIXER-AI2-Extension-Builder.zip?rlkey=a5b7rqvgs4ul61bcjl8khjey0&st=4cl1maq1&dl=1" class="btn btn-primary">
+            <a href="https://www.dropbox.com/scl/fi/jljenkwi1cl36va199lr9/AIXER-AI2-Extension-Builder.zip?rlkey=aknqco2754p3vn56lyd7owe9d&st=kxie0q9l&dl=1" class="btn btn-primary">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 Download AIXER
             </a>
@@ -345,6 +341,83 @@
         </div>
     </div>
 </section>
+
+<div style="background: linear-gradient(270deg, #2563eb, #7c3aed, #ec4899, #2563eb); background-size: 400% 400%; color: #fff; text-align: center; padding: 12px 24px; font-size: 15px; font-weight: 600; letter-spacing: 0.3px; animation: flash 3s ease-in-out infinite;">
+    Coming soon in next update: AI Integration To Automate Everything :)
+</div>
+
+<!-- Typing Effect -->
+<div style="display: flex; justify-content: center; padding: 20px 24px 0;">
+    <div id="typingContainer" style="position: relative; width: 100%; max-width: 700px;">
+        <div id="typingBox" style="background: #fff; border: 2px solid #e0e7ff; border-radius: 20px; padding: 18px 28px; box-shadow: 0 4px 24px rgba(37,99,235,0.08); display: flex; align-items: center; gap: 12px; transition: all 0.6s ease; position: relative; overflow: hidden;">
+            <div id="mouseIcon" style="flex-shrink: 0; width: 32px; height: 32px; background: #f1f5f9; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #2563eb; transition: transform 0.15s;">🖱</div>
+            <span id="typingText" style="font-size: 16px; color: #1e293b; font-weight: 500; min-height: 24px;"></span>
+            <span id="typingCursor" style="display: inline-block; width: 2px; height: 20px; background: #2563eb; animation: blink 0.7s step-end infinite; margin-left: 2px;"></span>
+        </div>
+    </div>
+</div>
+
+<style>
+    @keyframes blink { 50% { opacity: 0; } }
+    @keyframes blurOut {
+        0% { filter: blur(0); opacity: 1; transform: scale(1); }
+        100% { filter: blur(8px); opacity: 0; transform: scale(0.95); }
+    }
+    @keyframes clickPop {
+        0% { transform: scale(1); }
+        50% { transform: scale(0.85); }
+        100% { transform: scale(1); }
+    }
+    .typing-blur { animation: blurOut 0.8s ease forwards; }
+    .typing-click { animation: clickPop 0.3s ease; }
+</style>
+
+<script>
+    (function() {
+        const texts = [
+            "hey aixer fix my code for Admob Extension",
+            "hey aixer fix the class conflicts which is causing runtime error",
+            "hey aixer fix the manifest file",
+            "hey aixer update the remote dependencies to latest"
+        ];
+        const textEl = document.getElementById('typingText');
+        const cursorEl = document.getElementById('typingCursor');
+        const boxEl = document.getElementById('typingBox');
+        const mouseEl = document.getElementById('mouseIcon');
+        let idx = 0, charIdx = 0, isDeleting = false;
+
+        function type() {
+            const current = texts[idx];
+            if (!isDeleting) {
+                if (charIdx < current.length) {
+                    textEl.textContent += current[charIdx++];
+                    setTimeout(type, 40 + Math.random() * 30);
+                } else {
+                    setTimeout(() => { isDeleting = true; type(); }, 2000);
+                }
+            } else {
+                if (charIdx > 0) {
+                    textEl.textContent = current.substring(0, --charIdx);
+                    setTimeout(type, 20);
+                } else {
+                    isDeleting = false;
+                    idx = (idx + 1) % texts.length;
+                    boxEl.classList.add('typing-blur');
+                    mouseEl.classList.add('typing-click');
+                    setTimeout(() => {
+                        boxEl.classList.remove('typing-blur');
+                        mouseEl.classList.remove('typing-click');
+                        boxEl.style.filter = 'none';
+                        boxEl.style.opacity = '1';
+                        boxEl.style.transform = 'none';
+                        type();
+                    }, 900);
+                }
+            }
+        }
+        setTimeout(type, 800);
+    })();
+</script>
 
 <!-- Capabilities -->
 <section style="padding: 40px 0 80px;">
@@ -629,7 +702,7 @@
         <div class="pricing-grid">
             <div class="pricing-card featured">
                 <div class="pricing-name">Lifetime</div>
-                <div class="pricing-price">$99 <span></span></div>
+                <div class="pricing-price">$199 <span></span></div>
                 <div class="pricing-duration">Premium License</div>
                 <div class="pricing-desc">
                     One-time payment. Lifetime access to AIXER, all features, all SDK presets, updates, and premium support.
@@ -1066,7 +1139,7 @@ blacklist:
                 Contact via WhatsApp
             </a>
             <a href="https://www.paypal.com/ncp/payment/QB6J8MEH3ERD2" class="btn btn-green">Purchase License</a>
-            <a href="https://www.dropbox.com/scl/fi/c2e2g0xkzqdalalltublg/AIXER-AI2-Extension-Builder.zip?rlkey=a5b7rqvgs4ul61bcjl8khjey0&st=4cl1maq1&dl=1" class="btn btn-primary">Download AIXER</a>
+            <a href="https://www.dropbox.com/scl/fi/jljenkwi1cl36va199lr9/AIXER-AI2-Extension-Builder.zip?rlkey=aknqco2754p3vn56lyd7owe9d&st=kxie0q9l&dl=1" class="btn btn-primary">Download AIXER</a>
         </div>
     </div>
 </section>
