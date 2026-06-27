@@ -86,6 +86,43 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 32px rgba(37,99,235,0.4);
         }
+
+        /* Download Modal */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 200;
+            align-items: center; justify-content: center;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-box {
+            background: #fff; border-radius: 20px; padding: 36px; max-width: 480px; width: 90%;
+            text-align: center; position: relative; animation: modalIn 0.25s ease;
+        }
+        @keyframes modalIn {
+            from { transform: scale(0.9) translateY(20px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        .modal-box h2 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+        .modal-box p { font-size: 14px; color: #6b7280; margin-bottom: 24px; }
+        .modal-close {
+            position: absolute; top: 16px; right: 16px; background: none; border: none;
+            font-size: 24px; cursor: pointer; color: #9ca3af; line-height: 1;
+        }
+        .modal-close:hover { color: #1a1a2e; }
+        .modal-source {
+            display: flex; align-items: center; gap: 14px;
+            padding: 16px 20px; border: 2px solid #eaeef2; border-radius: 14px;
+            text-decoration: none; color: inherit; transition: all 0.2s; margin-bottom: 12px;
+        }
+        .modal-source:hover { border-color: #2563eb; background: #f8fafc; transform: translateY(-1px); }
+        .modal-source-icon {
+            width: 44px; height: 44px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+            font-size: 22px;
+        }
+        .modal-source-info { text-align: left; }
+        .modal-source-info strong { display: block; font-size: 15px; font-weight: 600; }
+        .modal-source-info span { font-size: 13px; color: #6b7280; }
         .btn-outline {
             background: transparent;
             color: #2563eb;
@@ -326,7 +363,7 @@
             and a reproducible packaging pipeline.
         </p>
         <div class="hero-buttons">
-            <a href="https://www.dropbox.com/scl/fi/jljenkwi1cl36va199lr9/AIXER-AI2-Extension-Builder.zip?rlkey=aknqco2754p3vn56lyd7owe9d&st=kxie0q9l&dl=1" class="btn btn-primary">
+            <a href="javascript:void(0)" onclick="openDownloadModal()" class="btn btn-primary">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 Download AIXER
             </a>
@@ -1139,10 +1176,33 @@ blacklist:
                 Contact via WhatsApp
             </a>
             <a href="https://www.paypal.com/ncp/payment/QB6J8MEH3ERD2" class="btn btn-green">Purchase License</a>
-            <a href="https://www.dropbox.com/scl/fi/jljenkwi1cl36va199lr9/AIXER-AI2-Extension-Builder.zip?rlkey=aknqco2754p3vn56lyd7owe9d&st=kxie0q9l&dl=1" class="btn btn-primary">Download AIXER</a>
+            <a href="javascript:void(0)" onclick="openDownloadModal()" class="btn btn-primary">Download AIXER</a>
         </div>
     </div>
 </section>
+
+<!-- Download Modal -->
+<div class="modal-overlay" id="downloadModal">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeDownloadModal()">&times;</button>
+        <h2>Download AIXER</h2>
+        <p>Choose a download source</p>
+        <a href="https://www.dropbox.com/scl/fi/jljenkwi1cl36va199lr9/AIXER-AI2-Extension-Builder.zip?rlkey=aknqco2754p3vn56lyd7owe9d&st=kxie0q9l&dl=1" class="modal-source">
+            <div class="modal-source-icon" style="background:#dbeafe;color:#2563eb;">&#x1F4E6;</div>
+            <div class="modal-source-info">
+                <strong>Dropbox</strong>
+                <span>Fast direct download</span>
+            </div>
+        </a>
+        <a href="https://drive.google.com/file/d/1wfBTlmCvCR1yyHRSoBjndnU-I7MfTCBk/view?usp=sharing" class="modal-source">
+            <div class="modal-source-icon" style="background:#fef3c7;color:#d97706;">&#x1F310;</div>
+            <div class="modal-source-info">
+                <strong>Google Drive</strong>
+                <span>Alternative download link</span>
+            </div>
+        </a>
+    </div>
+</div>
 
 <footer>
     <div class="container">
@@ -1167,6 +1227,20 @@ blacklist:
             document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
             document.getElementById('tab-' + target).classList.add('active');
         });
+    });
+
+    // Download Modal
+    function openDownloadModal() {
+        document.getElementById('downloadModal').classList.add('open');
+    }
+    function closeDownloadModal() {
+        document.getElementById('downloadModal').classList.remove('open');
+    }
+    document.getElementById('downloadModal').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closeDownloadModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeDownloadModal();
     });
 </script>
 
