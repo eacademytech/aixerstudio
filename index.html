@@ -1134,14 +1134,14 @@ blacklist:
         <button class="modal-close" onclick="closeDownloadModal()">&times;</button>
         <h2>Download AIXER</h2>
         <p>Choose a download source</p>
-        <a href="javascript:void(0)" onclick="openDownloadModal()" class="modal-source">
+        <a href="https://www.dropbox.com/scl/fi/l94d9pj9364z135ciy1wu/AIXER-AI2-Extension-Builder.zip?rlkey=hg7nc1reqhj6t4hpj4o1e6tt2&st=g350a7hn&dl=1" class="modal-source">
             <div class="modal-source-icon" style="background:#dbeafe;color:#2563eb;">&#x1F4E6;</div>
             <div class="modal-source-info">
                 <strong>Dropbox</strong>
                 <span>Fast direct download</span>
             </div>
         </a>
-        <a href="javascript:void(0)" onclick="openDownloadModal()" class="modal-source">
+        <a href="https://drive.google.com/file/d/1-tS8tfRVgkhUZDZnF4AdxBkSO6rCF1pc/view?usp=sharing" class="modal-source">
             <div class="modal-source-icon" style="background:#fef3c7;color:#d97706;">&#x1F310;</div>
             <div class="modal-source-info">
                 <strong>Google Drive</strong>
@@ -1178,7 +1178,7 @@ blacklist:
 
     // Download Modal
     function openDownloadModal() {
-        alert('Download links will be available at 5:00 PM IST (11:30 UTC)');
+        document.getElementById('downloadModal').classList.add('open');
     }
     function closeDownloadModal() {
         document.getElementById('downloadModal').classList.remove('open');
