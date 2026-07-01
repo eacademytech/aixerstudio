@@ -602,78 +602,46 @@
         <div class="tab-content active" id="tab-windows">
             <div class="install-step">
                 <div class="step-num">1</div>
-                <p>Download and extract the AIXER ZIP file to a folder, e.g. <code>C:\Aixer</code></p>
+                <p>Install <a href="https://www.python.org/downloads/" target="_blank" style="color: #2563eb;">Python 3.8+</a> on your system</p>
             </div>
             <div class="install-step">
                 <div class="step-num">2</div>
-                <p>Open <strong>Command Prompt</strong> and navigate to the AIXER folder:</p>
+                <p>Open <strong>Command Prompt (Cmd)</strong> &gt; navigate to the AIXER folder &gt; run this command:</p>
             </div>
-            <div class="code-block">cd C:\Aixer</div>
+            <div class="code-block">python3 -m pip install -e .</div>
             <div class="install-step">
                 <div class="step-num">3</div>
-                <p>Run the installer (this installs Python, JDK 17, and required JARs):</p>
+                <p>After that run this command:</p>
             </div>
-            <div class="code-block">.\aixer.bat install</div>
-            <div class="install-step">
-                <div class="step-num">alt</div>
-                <p><em>Optional:</em> Install as a Python package instead (if you have Python 3.8+ installed):</p>
-            </div>
-            <div class="code-block">python -m pip install -e .</div>
+            <div class="code-block">aixer setup</div>
             <div class="install-step">
                 <div class="step-num">4</div>
-                <p>Verify the installation:</p>
-            </div>
-            <div class="code-block">aixer --help</div>
-            <div class="install-step">
-                <div class="step-num">5</div>
-                <p>Create your first extension project:</p>
-            </div>
-            <div class="code-block">aixer init MyExtension</div>
-            <div class="install-step">
-                <div class="step-num">6</div>
-                <p>Build your extension:</p>
-            </div>
-            <div class="code-block">cd MyExtension<br>aixer build</div>
-            <p style="font-size: 14px; color: #6b7280; margin-top: 8px;">Your built <code>.aix</code> file will be created in the <code>output</code> folder.</p>
-            <div class="note-box">
-                <strong>Note:</strong> Keep the AIXER folder in one place. Do not delete the <code>tools</code> folder after installation. If you move the AIXER folder, run <code>.\aixer.bat install</code> again from the new location.
+                <p><strong>Installation Done!</strong></p>
             </div>
         </div>
 
         <!-- Linux -->
         <div class="tab-content" id="tab-linux">
-            <p style="margin-bottom: 20px; color: #6b7280;">The Linux installation follows the same steps as macOS. Use the <code>aixer.sh</code> launcher script.</p>
             <div class="install-step">
                 <div class="step-num">1</div>
-                <p>Download and extract the AIXER ZIP file to a folder, e.g. <code>~/Aixer</code></p>
+                <p>Install <a href="https://www.python.org/downloads/" target="_blank" style="color: #2563eb;">Python 3.8+</a> on your system</p>
             </div>
             <div class="install-step">
                 <div class="step-num">2</div>
-                <p>Open <strong>Terminal</strong> and navigate to the AIXER folder:</p>
-            </div>
-            <div class="code-block">cd ~/Aixer</div>
-            <div class="install-step">
-                <div class="step-num">3</div>
-                <p>Make the launcher executable and run the installer:</p>
-            </div>
-            <div class="code-block">chmod +x ./aixer.sh<br>./aixer.sh install</div>
-            <div class="install-step">
-                <div class="step-num">alt</div>
-                <p><em>Optional:</em> Install as a Python package instead (if you have Python 3.8+ installed):</p>
+                <p>Open <strong>Terminal</strong> &gt; navigate to the AIXER folder &gt; run this command:</p>
             </div>
             <div class="code-block">python3 -m pip install -e .</div>
             <div class="install-step">
-                <div class="step-num">4</div>
-                <p>Verify the installation:</p>
+                <div class="step-num">3</div>
+                <p>After that, run this command:</p>
             </div>
-            <div class="code-block">aixer --help</div>
+            <div class="code-block">aixer setup</div>
             <div class="install-step">
-                <div class="step-num">5</div>
-                <p>Create and build your first extension:</p>
+                <div class="step-num">4</div>
+                <p><strong>Installation Done!</strong></p>
             </div>
-            <div class="code-block">aixer init MyExtension<br>cd MyExtension<br>aixer build</div>
             <div class="note-box">
-                <strong>Note:</strong> If Python 3 is missing, install it from your package manager (<code>sudo apt install python3</code> on Debian/Ubuntu). Keep the AIXER folder in one place. Run <code>./aixer.sh install</code> again if you move the folder.
+                <strong>Note:</strong> On some Linux distros or macOS setups (especially with system Python), you may need to use <code>pip3</code> instead of <code>python3 -m pip</code>, or add <code>--user</code> if you hit a permissions error.
             </div>
         </div>
 
@@ -681,45 +649,24 @@
         <div class="tab-content" id="tab-mac">
             <div class="install-step">
                 <div class="step-num">1</div>
-                <p>Download and extract the AIXER ZIP file to a folder, e.g. <code>~/Aixer</code></p>
+                <p>Install <a href="https://www.python.org/downloads/" target="_blank" style="color: #2563eb;">Python 3.8+</a> on your system</p>
             </div>
             <div class="install-step">
                 <div class="step-num">2</div>
-                <p>Open <strong>Terminal</strong> and navigate to the AIXER folder:</p>
-            </div>
-            <div class="code-block">cd ~/Aixer</div>
-            <div class="install-step">
-                <div class="step-num">3</div>
-                <p>Make the launcher executable:</p>
-            </div>
-            <div class="code-block">chmod +x ./bin/aixer</div>
-            <div class="install-step">
-                <div class="step-num">4</div>
-                <p>Run the installer:</p>
-            </div>
-            <div class="code-block">./bin/aixer install</div>
-            <div class="install-step">
-                <div class="step-num">alt</div>
-                <p><em>Optional:</em> Install as a Python package instead (if you have Python 3.8+ installed):</p>
+                <p>Open <strong>Terminal</strong> &gt; navigate to the AIXER folder &gt; run this command:</p>
             </div>
             <div class="code-block">python3 -m pip install -e .</div>
             <div class="install-step">
-                <div class="step-num">5</div>
-                <p>Verify the installation:</p>
+                <div class="step-num">3</div>
+                <p>After that, run this command:</p>
             </div>
-            <div class="code-block">aixer --help</div>
+            <div class="code-block">aixer setup</div>
             <div class="install-step">
-                <div class="step-num">6</div>
-                <p>Create and build your first extension:</p>
+                <div class="step-num">4</div>
+                <p><strong>Installation Done!</strong></p>
             </div>
-            <div class="code-block">aixer init MyExtension<br>cd MyExtension<br>aixer build</div>
-            <p style="font-size: 14px; color: #6b7280; margin-top: 8px;">Your built <code>.aix</code> file will be created in the <code>output</code> folder.</p>
             <div class="note-box">
-                <strong>Important:</strong> The macOS launcher requires Python 3 to be available on your Mac. Check with <code>python3 --version</code>. If missing, install from <a href="https://www.python.org/downloads/macos/" style="color: #2563eb;">python.org</a>.<br><br>
-                <strong>Optional:</strong> Add AIXER to your PATH:<br>
-                <code>echo 'export PATH="$HOME/Aixer/bin:$PATH"' &gt;&gt; ~/.zshrc</code><br>
-                <code>source ~/.zshrc</code><br>
-                Then run <code>aixer</code> from any folder.
+                <strong>Note:</strong> On some Linux distros or macOS setups (especially with system Python), you may need to use <code>pip3</code> instead of <code>python3 -m pip</code>, or add <code>--user</code> if you hit a permissions error.
             </div>
         </div>
     </div>
@@ -1187,14 +1134,14 @@ blacklist:
         <button class="modal-close" onclick="closeDownloadModal()">&times;</button>
         <h2>Download AIXER</h2>
         <p>Choose a download source</p>
-        <a href="https://www.dropbox.com/scl/fi/jljenkwi1cl36va199lr9/AIXER-AI2-Extension-Builder.zip?rlkey=aknqco2754p3vn56lyd7owe9d&st=kxie0q9l&dl=1" class="modal-source">
+        <a href="https://www.dropbox.com/scl/fi/4ex1cc4d7zdz1gczam3hy/AIXER-AI2-Extension-Builder.zip?rlkey=h760pi8tj69g4ja7vaf0avg5s&st=fui9jdma&dl=1" class="modal-source">
             <div class="modal-source-icon" style="background:#dbeafe;color:#2563eb;">&#x1F4E6;</div>
             <div class="modal-source-info">
                 <strong>Dropbox</strong>
                 <span>Fast direct download</span>
             </div>
         </a>
-        <a href="https://drive.google.com/file/d/1wfBTlmCvCR1yyHRSoBjndnU-I7MfTCBk/view?usp=sharing" class="modal-source">
+        <a href="https://drive.google.com/file/d/1X2Z3ZiDFfZaxr0EVcoymBrtK_5q0Mt3i/view?usp=sharing" class="modal-source">
             <div class="modal-source-icon" style="background:#fef3c7;color:#d97706;">&#x1F310;</div>
             <div class="modal-source-info">
                 <strong>Google Drive</strong>
