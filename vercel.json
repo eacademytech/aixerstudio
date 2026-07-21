@@ -1,9 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [
+  "redirects": [
     {
       "source": "/:path*",
-      "destination": "https://www.btechdev.in/aixer/:path*"
+      "destination": "https://www.btechdev.in/aixer/:path*",
+      "permanent": true
     }
   ]
 }
