@@ -1,373 +1,476 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIXER - AIX Extension Builder for App Inventor</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%232563eb'/%3E%3Cstop offset='100%25' stop-color='%237c3aed'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Ctext x='32' y='44' font-family='Arial, sans-serif' font-size='34' font-weight='800' fill='white' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        @keyframes flash {
-            0% { opacity: 1; background-position: 0% 50%; }
-            25% { opacity: 0.85; }
-            50% { opacity: 1; background-position: 100% 50%; }
-            75% { opacity: 0.9; }
-            100% { opacity: 1; background-position: 0% 50%; }
-        }
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #ffffff;
-            color: #1a1a2e;
-            line-height: 1.6;
-        }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIXER - AIX Extension Builder for App Inventor | Bharat Technologies</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230A1128'/%3E%3Cstop offset='.55' stop-color='%232563EB'/%3E%3Cstop offset='1' stop-color='%23C9A227'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='24' fill='url(%23g)'/%3E%3Cpath d='M50 18 L82 34 L50 50 L18 34 Z' fill='none' stroke='white' stroke-width='5' stroke-linejoin='round'/%3E%3Cpath d='M50 50 L50 82' stroke='white' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="description" content="AIXER — AIX Extension Builder for MIT App Inventor, Kodular & Niotron by Bharat Technologies. CLI + GUI, 30+ SDK presets, ProGuard/R8.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--paper:#f7f8fc; --paper2:#ffffff; --ink:#0a1128; --navy:#0b1530; --navy2:#111e42;
+--muted:#5b657f; --line:rgba(10,17,40,.09); --line2:rgba(10,17,40,.15);
+--gold:#c9a227; --gold2:#eed88a; --gold-deep:#8a6d14;
+--blue:#2563eb; --violet:#7c3aed; --pink:#ec4899; --emerald:#0b5e2f; --green:#10b981;
+--r:20px; --rs:12px;
+--shadow:0 18px 50px rgba(10,17,40,.10);
+--shadow-lg:0 30px 80px rgba(10,17,40,.16);
+--font-d:'DM Sans',sans-serif; --font-h:'Exo 2',sans-serif; --font-s:'Fraunces',serif; --font-m:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth;overflow-x:hidden;overflow-x:clip;max-width:100%}
+body{font-family:var(--font-d);background:var(--paper);color:var(--ink);overflow-x:hidden;overflow-x:clip;max-width:100%;width:100%;line-height:1.6;-webkit-font-smoothing:antialiased;position:relative}
+img,svg,video,iframe{max-width:100%}
+section{overflow-x:hidden;overflow-x:clip}
+.hero-h1,.sec-title,.hero-sub,.sec-sub,.eyebrow,.announce{overflow-wrap:break-word;word-wrap:break-word;max-width:100%}
+::selection{background:#0a1128;color:#eed88a}
+::-webkit-scrollbar{width:9px}::-webkit-scrollbar-track{background:#eef0f7}::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#0a1128,#c9a227);border-radius:99px}
+a{color:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding:0 1.4rem;position:relative;z-index:2}
+#three-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55}
+.orb{position:fixed;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0}
+.orb-1{width:640px;height:640px;background:radial-gradient(circle,#2563eb55,transparent 70%);top:-18%;left:-12%;animation:drift 16s ease-in-out infinite alternate}
+.orb-2{width:560px;height:560px;background:radial-gradient(circle,#c9a22744,transparent 70%);top:10%;right:-14%;animation:drift 20s ease-in-out infinite alternate-reverse}
+.orb-3{width:480px;height:480px;background:radial-gradient(circle,#7c3aed33,transparent 70%);top:55%;left:30%;animation:drift 24s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate(70px,50px) scale(1.12)}}
+#scroll-progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:300;background:linear-gradient(90deg,#0a1128,#2563eb,#c9a227,#eed88a)}
+/* loader */
+#loader{position:fixed;inset:0;z-index:99999;background:#0a1128;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:22px;transition:opacity .7s,visibility .7s}
+#loader.hidden{opacity:0;visibility:hidden}
+.loader-mark{width:84px;height:84px;border-radius:24px;background:linear-gradient(135deg,#16224f,#0a1128);border:1px solid rgba(238,216,138,.35);display:flex;align-items:center;justify-content:center;font-size:2rem;color:#eed88a;box-shadow:0 0 60px rgba(201,162,39,.35);animation:markFloat 2.2s ease-in-out infinite}
+@keyframes markFloat{50%{transform:translateY(-8px) rotate(-3deg)}}
+.loader-bar{width:210px;height:3px;background:rgba(255,255,255,.12);border-radius:99px;overflow:hidden}
+.loader-bar span{display:block;height:100%;width:40%;background:linear-gradient(90deg,#2563eb,#eed88a);border-radius:99px;animation:load 1.1s ease-in-out infinite}
+@keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
+#loader p{font-family:var(--font-m);font-size:.68rem;letter-spacing:3px;color:#8b93b0}
+/* announcement */
+.announce{position:relative;z-index:101;background:linear-gradient(90deg,#0a1128,#16224f 40%,#0a1128);color:#e9eaf2;font-size:.72rem;letter-spacing:.4px;padding:.5rem 1rem;text-align:center;border-bottom:1px solid rgba(238,216,138,.25)}
+.announce b{color:#eed88a}.announce .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 10px #22c55e;margin-right:8px;animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.35}}
+/* nav */
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.78);backdrop-filter:blur(22px) saturate(1.5);border-bottom:1px solid transparent;transition:.3s}
+nav.scrolled{background:rgba(255,255,255,.94);border-bottom-color:var(--line);box-shadow:0 10px 40px rgba(10,17,40,.08)}
+.nav-inner{max-width:1280px;margin:0 auto;padding:.65rem 1.4rem;display:flex;align-items:center;gap:1rem}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto}
+.brand-mark{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0a1128 10%,#1d2c68 55%,#c9a227 130%);display:flex;align-items:center;justify-content:center;color:#eed88a;font-size:1.05rem;box-shadow:0 8px 22px rgba(10,17,40,.3),inset 0 1px 0 rgba(255,255,255,.25);animation:brandBulb 2.8s ease-in-out infinite}
+@keyframes brandBulb{0%,100%{box-shadow:0 8px 22px rgba(10,17,40,.3),inset 0 1px 0 rgba(255,255,255,.25);filter:brightness(1)}50%{box-shadow:0 0 22px rgba(238,216,138,.9),0 0 48px rgba(201,162,39,.5),0 8px 22px rgba(10,17,40,.3);filter:brightness(1.2)}}
+.brand-name{font-family:var(--font-h);font-weight:800;font-size:.88rem;letter-spacing:.6px;line-height:1.1}
+.brand-name small{display:block;font-family:var(--font-m);font-weight:400;font-size:.58rem;letter-spacing:2.5px;color:var(--gold-deep)}
+.nav-links{display:flex;gap:2px;background:rgba(10,17,40,.04);border:1px solid var(--line);padding:4px;border-radius:99px}
+.nav-links a{text-decoration:none;font-size:.74rem;font-weight:600;color:#3c4560;padding:7px 13px;border-radius:99px;transition:.2s;white-space:nowrap}
+.nav-links a:hover{background:#fff;color:var(--ink);box-shadow:0 4px 12px rgba(10,17,40,.08)}
+.nav-links a.active{background:#0a1128;color:#eed88a}
+.nav-cta{display:flex;align-items:center;gap:.6rem}
+.nav-search{position:relative;display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line2);border-radius:99px;padding:7px 13px;width:168px;transition:.25s}
+.nav-search:focus-within{border-color:var(--gold);box-shadow:0 0 0 4px rgba(201,162,39,.15);width:200px}
+.nav-search i{color:var(--muted);font-size:.75rem}
+.nav-search input{border:none;background:transparent;outline:none;font-family:var(--font-d);font-size:.76rem;width:100%;color:var(--ink)}
+.nav-search-results{position:absolute;top:calc(100% + 10px);left:0;right:0;min-width:260px;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-lg);max-height:320px;overflow:auto;opacity:0;visibility:hidden;transform:translateY(-6px);transition:.2s;z-index:200}
+.nav-search-results.active{opacity:1;visibility:visible;transform:none}
+.sr-item{display:flex;align-items:center;gap:10px;padding:10px 13px;text-decoration:none;font-size:.8rem;transition:.15s}
+.sr-item:hover{background:#f4f6fd}.sr-item small{color:var(--muted);display:block;font-size:.68rem}
+.sr-ic{width:30px;height:30px;min-width:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.8rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 22px;border-radius:99px;font-family:var(--font-h);font-weight:700;font-size:.78rem;letter-spacing:.3px;text-decoration:none;border:none;cursor:pointer;transition:.25s;position:relative;overflow:hidden;white-space:nowrap}
+.btn-sm{padding:8px 15px;font-size:.7rem}
+.btn-navy{background:linear-gradient(135deg,#0a1128,#1c2a63);color:#fff;box-shadow:0 10px 26px rgba(10,17,40,.3)}
+.btn-navy:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(10,17,40,.4)}
+.btn-gold{background:linear-gradient(135deg,#a8841c,#e9cf6e 55%,#c9a227);color:#231a02;box-shadow:0 10px 26px rgba(201,162,39,.4)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 16px 38px rgba(201,162,39,.55)}
+.btn-green{background:linear-gradient(135deg,#0b5e2f,#12934c);color:#fff;box-shadow:0 10px 26px rgba(11,94,47,.35)}
+.btn-green:hover{transform:translateY(-2px)}
+.btn-ghost{background:#fff;border:1px solid var(--line2);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--ink);transform:translateY(-2px)}
+.btn::after{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);transition:left .5s}
+.btn:hover::after{left:130%}
+.burger{display:none;background:#0a1128;color:#eed88a;border:none;width:40px;height:40px;border-radius:11px;font-size:1rem;cursor:pointer}
+/* hero */
+#home{padding:3.2rem 0 2.2rem;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:3rem;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid rgba(201,162,39,.45);border-radius:99px;padding:6px 14px 6px 7px;font-size:.68rem;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:#6b5a10;margin-bottom:1rem;box-shadow:0 8px 24px rgba(201,162,39,.15)}
+.eyebrow .pulse{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#0a1128,#c9a227);color:#eed88a;display:flex;align-items:center;justify-content:center;font-size:.65rem}
+.hero-h1{font-family:var(--font-h);font-size:clamp(2rem,4.4vw,3.4rem);font-weight:900;line-height:1.04;letter-spacing:-1px;margin-bottom:1rem}
+.hero-h1 .serif{font-family:var(--font-s);font-weight:700;font-style:italic;background:linear-gradient(92deg,#2563eb,#7c3aed 50%,#b8860b);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-h1 .gold-line{position:relative;display:inline-block}
+.hero-h1 .gold-line::after{content:'';position:absolute;left:0;right:0;bottom:4px;height:10px;background:linear-gradient(90deg,rgba(201,162,39,.45),rgba(238,216,138,.6));z-index:-1;border-radius:3px}
+.hero-sub{color:var(--muted);font-size:.95rem;max-width:540px;line-height:1.7}
+.hero-sub strong{color:var(--ink)}
+.hero-cta{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.4rem}
+.trust{display:flex;align-items:center;gap:12px;margin-top:1.4rem}
+.avatars{display:flex}
+.avatars span{width:34px;height:34px;border-radius:50%;border:2.5px solid var(--paper);margin-left:-10px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:#fff;font-family:var(--font-h)}
+.avatars span:first-child{margin-left:0}
+.trust-txt{font-size:.76rem;color:var(--muted)}.trust-txt b{color:var(--ink)}
+.stars{color:#d99a06;letter-spacing:2px;font-size:.75rem}
+/* hero visual */
+.hero-visual{position:relative}
+.browser{background:#fff;border:1px solid var(--line2);border-radius:22px;box-shadow:var(--shadow-lg);overflow:hidden;position:relative;animation:floatY 7s ease-in-out infinite}
+@keyframes floatY{50%{transform:translateY(-10px)}}
+.browser-top{display:flex;align-items:center;gap:8px;padding:.75rem 1rem;background:linear-gradient(180deg,#f3f4fa,#e9ecf5);border-bottom:1px solid var(--line)}
+.browser-top i{width:11px;height:11px;border-radius:50%;display:block;font-style:normal}
+.urlbar{flex:1;background:#fff;border:1px solid var(--line);border-radius:8px;font-family:var(--font-m);font-size:.66rem;color:var(--muted);padding:5px 12px;display:flex;align-items:center;gap:7px}
+.urlbar b{color:#12934c}
+.browser-body{display:grid;grid-template-columns:1fr 1fr;min-height:300px}
+.code-pane{background:#0a1128;color:#dbe4ff;font-family:var(--font-m);font-size:.68rem;padding:1.1rem 1rem;line-height:1.8}
+.code-pane .k{color:#eed88a}.code-pane .s{color:#7dd3a8}.code-pane .f{color:#7aa2ff}.code-pane .c{color:#5b657f}
+.preview-pane{padding:1.1rem;background:linear-gradient(180deg,#fff,#f6f2df)}
+.preview-pane h4{font-family:var(--font-h);font-size:.78rem;margin-bottom:.7rem}
+.ext-row{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin-bottom:8px;box-shadow:0 4px 14px rgba(10,17,40,.05)}
+.ext-row .ic{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#fff}
+.ext-row b{font-size:.7rem;display:block;line-height:1.2}.ext-row small{font-size:.62rem;color:var(--muted)}
+.ext-row .ok{margin-left:auto;color:#12934c;font-size:.75rem}
+.float-card{position:absolute;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border:1px solid var(--line2);border-radius:16px;box-shadow:var(--shadow-lg);padding:.7rem .9rem;display:flex;align-items:center;gap:10px;animation:floatY 5s ease-in-out infinite}
+.fc-1{top:-22px;right:6%}.fc-2{bottom:-20px;left:-16px;animation-delay:-2.5s}
+.fc-ic{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1rem;color:#fff}
+.float-card b{font-family:var(--font-h);font-size:.76rem;display:block}.float-card small{font-size:.66rem;color:var(--muted)}
+.gold-ring{position:absolute;width:420px;height:420px;border:1.5px dashed rgba(201,162,39,.5);border-radius:50%;top:-60px;right:-80px;z-index:-1;animation:spin 40s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* logos */
+.logos{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.6);padding:.95rem 0;position:relative;z-index:2}
+.logos-row{display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem 2.2rem;align-items:center;color:#8b93b0;font-family:var(--font-h);font-weight:700;font-size:.78rem;letter-spacing:1.5px}
+.logos-row i{margin-right:7px}
+/* sections */
+section{padding:4rem 0;position:relative;z-index:2}
+.sec-head{text-align:center;max-width:720px;margin:0 auto 2.2rem}
+.sec-no{font-family:var(--font-m);font-size:.66rem;letter-spacing:3px;color:var(--gold-deep);text-transform:uppercase}
+.sec-title{font-family:var(--font-h);font-size:clamp(1.5rem,3vw,2.3rem);font-weight:800;letter-spacing:-.5px;line-height:1.15;margin:.5rem 0 .6rem}
+.sec-title em{font-family:var(--font-s);font-style:italic;font-weight:700}
+.sec-sub{color:var(--muted);font-size:.86rem}
+.gold-div{width:72px;height:4px;border-radius:99px;background:linear-gradient(90deg,#0a1128,#c9a227,#eed88a);margin:1rem auto 0}
+/* features */
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem}
+.feat{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:1.3rem 1.15rem;position:relative;overflow:hidden;transition:.3s}
+.feat:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:rgba(201,162,39,.5)}
+.feat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0a1128,#c9a227,#eed88a);opacity:0;transition:.3s}
+.feat:hover::before{opacity:1}
+.feat-ic{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;margin-bottom:.7rem;color:#fff;box-shadow:0 8px 18px rgba(10,17,40,.2)}
+.feat h3{font-family:var(--font-h);font-size:.9rem;margin-bottom:.3rem}.feat p{font-size:.76rem;color:var(--muted)}
+/* tools */
+.tool-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.tool{background:#fff;border:1px solid var(--line);border-radius:22px;padding:1.6rem 1.4rem;text-align:center;position:relative;overflow:hidden;transition:.3s}
+.tool:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.tool::after{content:'';position:absolute;inset:0;background:radial-gradient(400px circle at 50% -10%,rgba(201,162,39,.14),transparent 65%);opacity:0;transition:.3s;pointer-events:none}
+.tool:hover::after{opacity:1}
+.tool-tag{display:inline-flex;align-items:center;gap:6px;font-size:.62rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:5px 12px;border-radius:99px;margin-bottom:.8rem}
+.tool h3{font-family:var(--font-h);font-size:1rem}.tool p{font-size:.78rem;color:var(--muted);margin:.4rem 0 .9rem}
+.pill{display:inline-flex;align-items:center;gap:5px;background:#f1f3fa;border:1px solid var(--line);border-radius:99px;padding:4px 11px;font-size:.66rem;font-weight:600;color:#3c4560;margin:2px}
+.aixer-logo{animation:aixerBulb 2.8s ease-in-out infinite}
+.aixer-logo img{animation:aixerImgGlow 2.8s ease-in-out infinite}
+@keyframes aixerBulb{0%,100%{box-shadow:0 0 0 rgba(238,216,138,0),0 6px 18px rgba(10,17,40,.12);border-color:#eed88a}50%{box-shadow:0 0 28px rgba(238,216,138,.95),0 0 60px rgba(201,162,39,.5),0 6px 18px rgba(10,17,40,.12);border-color:#fff3c4}}
+@keyframes aixerImgGlow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.25) drop-shadow(0 0 8px rgba(238,216,138,.9))}}
+/* marquee */
+.marquee-sec{padding:1.2rem 0 2.4rem}
+.marquee-wrap{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.marquee-track{display:flex;width:max-content;gap:.7rem;animation:ml 42s linear infinite;padding:.3rem 0}
+.marquee-track.r{animation-name:mr;animation-duration:36s}
+.marquee-wrap:hover .marquee-track{animation-play-state:paused}
+@keyframes ml{to{transform:translateX(-50%)}}@keyframes mr{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.mini{display:flex;align-items:center;gap:.55rem;background:#fff;border:1px solid var(--line);border-radius:12px;padding:.55rem .85rem;text-decoration:none;min-width:190px;transition:.2s;box-shadow:0 4px 14px rgba(10,17,40,.04)}
+.mini:hover{transform:translateY(-3px);border-color:rgba(201,162,39,.55);box-shadow:0 10px 24px rgba(10,17,40,.1)}
+.mini-ic{width:30px;height:30px;min-width:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.8rem}
+.mini span{font-family:var(--font-h);font-weight:700;font-size:.72rem}
+/* extensions */
+.filter-tabs{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center;margin-bottom:1.6rem}
+.filter-tab{padding:8px 18px;border-radius:99px;font-size:.74rem;font-weight:700;background:#fff;border:1px solid var(--line2);color:var(--muted);cursor:pointer;transition:.2s;font-family:var(--font-d)}
+.filter-tab:hover{border-color:var(--gold);color:var(--ink)}
+.filter-tab.active{background:#0a1128;border-color:#0a1128;color:#eed88a;box-shadow:0 8px 20px rgba(10,17,40,.3)}
+.ext-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.ext{background:#fff;border:1px solid var(--line);border-radius:20px;padding:1.25rem;position:relative;overflow:hidden;display:flex;flex-direction:column;transition:.3s}
+.ext:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:rgba(201,162,39,.5)}
+.ext::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--cat,#2563eb),#c9a227);opacity:.85}
+.ext[data-category="auth"]{--cat:#2563eb}.ext[data-category="media"]{--cat:#ec4899}.ext[data-category="data"]{--cat:#10b981}.ext[data-category="payment"]{--cat:#0b5e2f}.ext[data-category="utility"]{--cat:#d97706}
+.ext-top{display:flex;align-items:center;gap:.7rem;margin-bottom:.55rem}
+.ext-ic{width:44px;height:44px;min-width:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:#fff;box-shadow:0 8px 18px rgba(10,17,40,.2)}
+.ext h3{font-family:var(--font-h);font-size:.88rem;line-height:1.25}
+.cat{font-size:.6rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--cat,#2563eb)}
+.ext p{font-size:.76rem;color:var(--muted);line-height:1.6;margin-bottom:.7rem;flex:1}
+.ext-meta{display:flex;align-items:center;gap:10px;font-size:.68rem;color:var(--muted);margin-bottom:.8rem;flex-wrap:wrap}
+.ext-meta .stars{font-size:.62rem}
+.compliant{display:inline-flex;align-items:center;gap:5px;color:#0b5e2f;font-weight:700}
+.ext-btns{display:flex;flex-wrap:wrap;gap:.45rem}
+/* app development */
+.app-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.app{background:#fff;border:1px solid var(--line);border-radius:20px;padding:1.25rem;position:relative;overflow:hidden;display:flex;flex-direction:column;transition:.3s}
+.app:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:rgba(201,162,39,.5)}
+.app::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--ac,#2563eb),#c9a227);opacity:.9}
+.app-top{display:flex;align-items:center;gap:.7rem;margin-bottom:.55rem}
+.app-ic{width:46px;height:46px;min-width:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;color:#fff;box-shadow:0 8px 18px rgba(10,17,40,.2)}
+.app h3{font-family:var(--font-h);font-size:.9rem;line-height:1.25}
+.app .cat{font-size:.6rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--ac,#2563eb)}
+.app p{font-size:.76rem;color:var(--muted);line-height:1.6;margin-bottom:.65rem}
+.app-feats{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:.8rem}
+.app-feats .pill{font-size:.64rem}
+.app-foot{display:flex;justify-content:space-between;align-items:center;gap:.6rem;margin-top:auto;padding-top:.8rem;border-top:1px dashed var(--line2);flex-wrap:wrap}
+.app-price{font-family:var(--font-h);font-weight:800;font-size:.92rem;color:#0b5e2f}
+.app-price small{display:block;font-family:var(--font-d);font-weight:600;font-size:.62rem;color:var(--muted);letter-spacing:.4px}
+.app-support{display:flex;align-items:center;gap:6px;font-size:.66rem;font-weight:700;color:#0b5e2f;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.3);border-radius:99px;padding:4px 10px;margin-bottom:.8rem;width:fit-content}
+.apps-note{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-bottom:1.6rem}
+.apps-note span{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line2);border-radius:99px;padding:7px 15px;font-size:.72rem;font-weight:700;color:#3c4560}
+.apps-note span i{color:#0b5e2f}
+/* dark guides */
+.dark{background:linear-gradient(180deg,#0a1128,#111e42 60%,#0a1128);color:#e9eaf2;border-radius:32px;margin:0 1rem;position:relative;overflow:hidden;border:1px solid rgba(238,216,138,.25)}
+.dark::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(201,162,39,.16),transparent 65%);top:-200px;right:-150px}
+.dark::after{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(37,99,235,.25),transparent 65%);bottom:-220px;left:-140px}
+.dark .sec-title{color:#fff}.dark .sec-sub{color:#aab1cc}
+.guide-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;position:relative;z-index:1}
+.guide{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:1.3rem;transition:.3s;backdrop-filter:blur(8px)}
+.guide:hover{transform:translateY(-5px);background:rgba(255,255,255,.08);border-color:rgba(238,216,138,.5)}
+.guide i.big{font-size:1.7rem;display:block;margin-bottom:.6rem}
+.guide h3{font-family:var(--font-h);font-size:.9rem;color:#fff;margin-bottom:.35rem}
+.guide p{font-size:.75rem;color:#aab1cc;margin-bottom:.9rem}
+.guide-foot{display:flex;justify-content:space-between;align-items:center}
+.price{font-family:var(--font-h);font-weight:800;color:#eed88a;font-size:1rem}
+.warn{max-width:680px;margin:0 auto 1.6rem;text-align:left;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-left:4px solid #ef4444;border-radius:12px;padding:.85rem 1.1rem;font-size:.78rem;color:#f3c1c1;position:relative;z-index:1}
+/* services */
+.svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:1020px;margin:0 auto}
+.svc{background:#fff;border:1px solid var(--line);border-radius:20px;padding:1.3rem;display:flex;gap:1rem;transition:.3s}
+.svc:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:rgba(201,162,39,.5)}
+.svc-ic{width:52px;height:52px;min-width:52px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:1.25rem}
+.svc h3{font-family:var(--font-h);font-size:.92rem;margin-bottom:.3rem}.svc p{font-size:.76rem;color:var(--muted)}
+.svc-foot{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.svc-price{font-family:var(--font-h);font-weight:800;color:#0b5e2f;font-size:.95rem}
+/* testimonials */
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.testi{background:#fff;border:1px solid var(--line);border-radius:20px;padding:1.4rem;position:relative;transition:.3s}
+.testi:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.testi .q{font-family:var(--font-s);font-size:2.4rem;line-height:1;color:var(--gold);margin-bottom:.3rem}
+.testi p{font-size:.8rem;color:#3c4560;font-style:italic}
+.testi-who{display:flex;align-items:center;gap:10px;margin-top:1rem}
+.testi-who span.av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-family:var(--font-h);font-size:.8rem}
+.testi-who b{font-size:.78rem;display:block}.testi-who small{font-size:.68rem;color:var(--muted)}
+/* testimonial rails */
+.testi-rail{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);padding:.45rem 0}
+.testi-track{display:flex;width:max-content;gap:1rem;animation:ml 60s linear infinite;padding:.4rem .5rem}
+.testi-track.r{animation-name:mr;animation-duration:72s}
+.testi-rail:hover .testi-track{animation-play-state:paused}
+.tcard{width:325px;min-width:325px;flex-shrink:0;background:#fff;border:1px solid var(--line);border-radius:18px;padding:1.15rem 1.1rem;position:relative;transition:.25s;box-shadow:0 4px 14px rgba(10,17,40,.05);white-space:normal}
+.tcard:hover{border-color:rgba(201,162,39,.55);box-shadow:var(--shadow)}
+.tcard .q{font-family:var(--font-s);font-size:2rem;line-height:1;color:var(--gold);margin-bottom:.25rem}
+.tcard p{font-size:.78rem;color:#3c4560;font-style:italic;line-height:1.6}
+.tcard p.native{font-style:normal;font-weight:600;color:var(--ink);margin-bottom:.25rem}
+.tcard p.en{font-size:.72rem;color:var(--muted)}
+.tcard-who{display:flex;align-items:center;gap:10px;margin-top:.85rem}
+.tcard-who span.av{width:36px;height:36px;min-width:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-family:var(--font-h);font-size:.75rem}
+.tcard-who b{font-size:.76rem;display:block;line-height:1.3}.tcard-who small{font-size:.66rem;color:var(--muted)}
+/* community / contact */
+.comm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;max-width:820px;margin:0 auto}
+.comm{text-align:center;padding:1.6rem 1rem;text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:20px;transition:.3s;display:block}
+.comm:hover{transform:translateY(-5px) scale(1.01);box-shadow:var(--shadow-lg);border-color:rgba(201,162,39,.5)}
+.comm i{font-size:1.8rem;display:block;margin-bottom:.6rem}.comm h3{font-family:var(--font-h);font-size:.92rem}.comm p{font-size:.75rem;color:var(--muted)}
+.contact-card{max-width:620px;margin:0 auto;text-align:center;background:#fff;border-radius:26px;padding:2.6rem 2rem;position:relative;box-shadow:var(--shadow-lg);border:1px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#0a1128,#c9a227,#eed88a) border-box}
+.wa-icon{font-size:2.8rem;color:#25D366;filter:drop-shadow(0 0 18px rgba(37,211,102,.4));animation:floatY 2.5s ease-in-out infinite}
+/* footer */
+footer{background:#0a1128;color:#aab1cc;padding:2.6rem 0 1.4rem;margin-top:4rem;position:relative;z-index:2;border-top:1px solid rgba(238,216,138,.25)}
+.foot-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:2rem;margin-bottom:2rem}
+.foot-grid h4{font-family:var(--font-h);color:#fff;font-size:.82rem;letter-spacing:1px;margin-bottom:.8rem}
+.foot-grid a{color:#aab1cc;text-decoration:none;font-size:.78rem;display:block;margin-bottom:.45rem;transition:.2s}
+.foot-grid a:hover{color:#eed88a}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:1.1rem;text-align:center;font-size:.72rem}
+/* floating */
+.fab-wa{position:fixed;bottom:24px;right:24px;z-index:90;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#25D366,#128C7E);display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:#fff;text-decoration:none;box-shadow:0 10px 30px rgba(37,211,102,.5);transition:.3s}
+.fab-wa:hover{transform:scale(1.1)}
+#toTop{position:fixed;bottom:92px;right:30px;z-index:90;width:44px;height:44px;border-radius:12px;background:#0a1128;color:#eed88a;border:1px solid rgba(238,216,138,.4);cursor:pointer;opacity:0;visibility:hidden;transition:.3s;font-size:.9rem}
+#toTop.show{opacity:1;visibility:visible}
+/* reveal */
+.reveal,.reveal-l,.reveal-r,.stagger{opacity:0;transition:opacity .7s ease,transform .7s ease}
+.reveal{transform:translateY(36px)}.reveal-l{transform:translateX(-36px)}.reveal-r{transform:translateX(36px)}
+.reveal.visible,.reveal-l.visible,.reveal-r.visible,.stagger.visible{opacity:1;transform:none}
+.stagger{transform:translateY(22px)}.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-top:1.4rem}
+.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:.9rem .6rem;text-align:center;transition:.25s;position:relative;overflow:hidden}
+.stat::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0a1128,#c9a227)}
+.stat:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.stat b{font-family:var(--font-h);font-size:1.45rem;display:block;background:linear-gradient(135deg,#0a1128,#8a6d14);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat small{font-size:.64rem;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);font-weight:700}
+/* consent */
+#consentOverlay{position:fixed;inset:0;z-index:999999;background:rgba(10,17,40,.6);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px;transition:.4s}
+#consentOverlay.hidden{opacity:0;visibility:hidden;pointer-events:none}
+body.consent-lock{overflow:hidden}
+.consent-box{width:100%;max-width:700px;max-height:88vh;background:#fff;border-radius:24px;box-shadow:0 40px 100px rgba(0,0,0,.4);display:flex;flex-direction:column;overflow:hidden;border:1px solid rgba(201,162,39,.4);animation:cin .35s ease}
+@keyframes cin{from{opacity:0;transform:translateY(18px) scale(.98)}}
+.consent-header{padding:1.3rem 1.5rem 1rem;background:linear-gradient(135deg,#0a1128,#1c2a63);color:#fff;display:flex;align-items:center;gap:13px}
+.consent-header h2{font-family:var(--font-h);font-size:1.05rem}.consent-header p{font-size:.74rem;color:#aab1cc}
+.consent-body{padding:1.1rem 1.5rem;overflow-y:auto;font-size:.8rem;color:#4b5878;line-height:1.65}
+.consent-body h4{font-family:var(--font-h);font-size:.82rem;color:var(--ink);margin:1rem 0 .3rem}.consent-body h4:first-child{margin-top:0}
+.consent-footer{padding:1rem 1.5rem 1.25rem;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:.8rem;background:#faf9f2}
+.consent-check{display:flex;gap:9px;font-size:.78rem;color:#4b5878;cursor:pointer}
+.consent-check input{margin-top:3px;accent-color:#0a1128;width:16px;height:16px;cursor:pointer}
+.consent-actions{display:flex;gap:10px;flex-wrap:wrap}
+#consentAgreeBtn{opacity:.45;pointer-events:none;flex:1;justify-content:center}
+#consentAgreeBtn.enabled{opacity:1;pointer-events:auto}
+.consent-decline{background:transparent;border:1px solid var(--line2);color:var(--muted);padding:.7rem 1.3rem;border-radius:99px;font-size:.8rem;font-weight:600;cursor:pointer}
+.highlight-ring{box-shadow:0 0 0 4px rgba(201,162,39,.5)!important}
+@media(max-width:1020px){.hero-grid{grid-template-columns:1fr;text-align:center}.hero-sub{margin:0 auto}.hero-cta,.trust{justify-content:center}.feat-grid{grid-template-columns:repeat(2,1fr)}.ext-grid,.app-grid,.guide-grid,.testi-grid{grid-template-columns:repeat(2,1fr)}.tool-row{grid-template-columns:1fr 1fr}.nav-links{display:none}.burger{display:block}.nav-links.open{display:flex;position:absolute;top:100%;left:12px;right:12px;flex-direction:column;background:#fff;border-radius:18px;padding:10px;box-shadow:var(--shadow-lg)}.foot-grid{grid-template-columns:1fr 1fr}.gold-ring{display:none}.hero-visual{max-width:100%;overflow:hidden;overflow:clip;border-radius:22px;padding-bottom:26px}.float-card{max-width:calc(100% - 20px)}.fc-1{top:6px;right:6px}.fc-2{bottom:0;left:6px}.reveal-l,.reveal-r{transform:none}.reveal{transform:translateY(20px)}}
+@media(max-width:640px){.wrap{padding:0 1rem}.ext-grid,.app-grid,.guide-grid,.testi-grid,.svc-grid,.tool-row,.comm-grid,.feat-grid,.stats,.browser-body{grid-template-columns:1fr}.tcard{width:272px;min-width:272px}.testi-track{animation-duration:40s}.testi-track.r{animation-duration:48s}.nav-inner{padding:.6rem .8rem;gap:.55rem}.brand{gap:8px;min-width:0;flex:1}.brand-mark{width:34px;height:34px;font-size:.9rem;border-radius:10px}.brand-name{font-size:.72rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.brand-name small{font-size:.5rem;letter-spacing:1.5px}.nav-cta{gap:.5rem;flex-shrink:0}.nav-cta .btn{display:none}.nav-search{display:none}.burger{width:42px;height:42px}.announce{font-size:.64rem;padding:.5rem .6rem;line-height:1.5}.eyebrow{font-size:.58rem;letter-spacing:.8px;padding:5px 11px 5px 6px;max-width:100%;white-space:normal;text-align:center}.hero-h1{font-size:clamp(1.65rem,8.5vw,2.2rem);letter-spacing:-.5px}.hero-sub{font-size:.86rem}.hero-cta .btn{width:100%;max-width:320px}.browser-body{min-height:0}.float-card{position:static;margin:8px auto 0;animation:none;width:fit-content}.fc-1,.fc-2{position:static}.hero-visual{display:flex;flex-direction:column}.browser{max-width:100%}.urlbar{font-size:.58rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.code-pane{font-size:.62rem;overflow-x:auto}.contact-card{padding:1.8rem 1.1rem;margin:0 auto;max-width:100%}section{padding:2.8rem 0;overflow-x:hidden;overflow-x:clip}.dark{margin:0 .6rem;border-radius:22px}.foot-grid{grid-template-columns:1fr}.fab-wa{bottom:16px;right:16px;width:52px;height:52px}#toTop{right:18px}}
 
-        /* Nav */
-        nav {
-            position: sticky; top: 0; z-index: 100;
-            background: rgba(255,255,255,0.92);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid #eaeef2;
-            padding: 16px 0;
-        }
-        nav .container {
-            display: flex; align-items: center; justify-content: space-between;
-        }
-        .logo {
-            font-size: 24px; font-weight: 800;
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
-        }
-        .nav-links { display: flex; gap: 24px; align-items: center; }
-        .nav-links a {
-            text-decoration: none; color: #4b5563; font-size: 14px; font-weight: 500;
-            transition: color 0.2s;
-        }
-        .nav-links a:hover { color: #2563eb; }
+/* ===== AIXER compat — redefined with index variables to look native ===== */
+.container{max-width:1280px;margin:0 auto;padding:0 1.4rem;position:relative;z-index:2}
+.hero{padding:3.4rem 0 1.6rem;text-align:center;position:relative;z-index:2}
+.hero .wrap,.hero .container{text-align:center}
+.hero img[alt="AIXER Logo"]{height:150px;width:150px;object-fit:contain;border-radius:50%;background:#fff;border:3px solid #eed88a;margin-bottom:12px;box-shadow:0 6px 18px rgba(10,17,40,.12)}
+.aixer-logo-glow{animation:aixerBulb 2.8s ease-in-out infinite}
+.hero h1.hero-h1{font-family:var(--font-h);font-weight:900;letter-spacing:-1px;line-height:1.06;font-size:clamp(1.9rem,4.4vw,3.2rem);margin-bottom:1rem}
+.hero h1.hero-h1 .serif{font-family:var(--font-s);font-style:italic;font-weight:700;background:linear-gradient(92deg,#2563eb,#7c3aed 50%,#b8860b);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .tagline{font-size:.78rem;font-weight:700;color:var(--ink);letter-spacing:1.6px;text-transform:uppercase;margin-bottom:.9rem}
+.hero .lede{font-size:clamp(.86rem,1.75vw,1.02rem);font-weight:500;color:var(--muted);max-width:700px;margin:0 auto 12px;line-height:1.6}
+.hero .desc{font-size:.88rem;color:var(--muted);max-width:720px;margin:0 auto}
+.hero-buttons{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin-top:1.3rem}
+/* legacy button aliases -> index pills */
+.btn-primary{background:linear-gradient(135deg,#a8841c,#e9cf6e 55%,#c9a227);color:#231a02;box-shadow:0 10px 26px rgba(201,162,39,.4)}
+.btn-primary:hover{transform:translateY(-2px)}
+.btn-whatsapp{background:linear-gradient(135deg,#0b5e2f,#12934c);color:#fff;box-shadow:0 10px 26px rgba(11,94,47,.35)}
+.btn-whatsapp:hover{transform:translateY(-2px)}
+.btn-green{background:linear-gradient(135deg,#0b5e2f,#12934c);color:#fff;box-shadow:0 10px 26px rgba(11,94,47,.35)}
+.btn-outline{background:#fff;border:1px solid var(--line2);color:var(--ink)}
+.flash-banner{background:linear-gradient(90deg,#0a1128,#16224f 40%,#0a1128);border-top:1px solid rgba(238,216,138,.25);border-bottom:1px solid rgba(238,216,138,.25);color:#e9eaf2;text-align:center;padding:12px 24px;font-size:.82rem;font-weight:600;letter-spacing:.3px;position:relative;z-index:2}
+.flash-banner b{color:#eed88a}
+/* typing */
+#typingBox{background:#fff!important;border:1px solid var(--line2)!important;border-radius:20px!important;box-shadow:var(--shadow)!important;font-family:var(--font-d)}
+#typingText{font-size:.9rem!important;color:var(--ink)!important;font-weight:500}
+#typingCursor{background:var(--gold)!important}
+#mouseIcon{background:#f4f6fd!important;color:var(--gold-deep)!important}
+@keyframes blink{50%{opacity:0}}
+@keyframes blurOut{0%{filter:blur(0);opacity:1;transform:scale(1)}100%{filter:blur(8px);opacity:0;transform:scale(.95)}}
+@keyframes clickPop{0%{transform:scale(1)}50%{transform:scale(.85)}100%{transform:scale(1)}}
+.typing-blur{animation:blurOut .8s ease forwards}
+.typing-click{animation:clickPop .3s ease}
+/* section titles: keep legacy classes as aliases */
+.section-title{font-family:var(--font-h);font-size:clamp(1.5rem,3vw,2.3rem);font-weight:800;letter-spacing:-.5px;line-height:1.15;margin:.5rem 0 .6rem;color:var(--ink)}
+.section-title em{font-family:var(--font-s);font-style:italic;font-weight:700}
+.section-subtitle{color:var(--muted);font-size:.86rem;text-align:center;max-width:640px;margin:0 auto}
+/* features grid/cards -> feat look */
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem}
+.feature-card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:1.3rem 1.15rem;position:relative;overflow:hidden;transition:.3s}
+.feature-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:rgba(201,162,39,.5)}
+.feature-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0a1128,#c9a227,#eed88a);opacity:0;transition:.3s}
+.feature-card:hover::before{opacity:1}
+.feature-card h3{font-family:var(--font-h);font-size:.9rem;margin-bottom:.3rem;color:var(--ink)}
+.feature-card p{font-size:.76rem;color:var(--muted)}
+.feature-card code,.install-step code,.inline-code{background:#f1f3fa;border:1px solid var(--line);padding:1px 7px;border-radius:6px;font-size:.72rem;color:#1d4ed8;font-family:var(--font-m)}
+.feature-icon{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:.7rem;color:#fff;box-shadow:0 8px 18px rgba(10,17,40,.2);background:linear-gradient(135deg,#0a1128,#2563eb)}
+.features-grid .feature-card:nth-child(3n+2) .feature-icon{background:linear-gradient(135deg,#c9a227,#7c3aed)}
+.features-grid .feature-card:nth-child(3n) .feature-icon{background:linear-gradient(135deg,#0b5e2f,#12934c)}
+/* tabs -> index filter-tab look */
+.tabs{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center;margin-bottom:1.6rem;background:transparent;padding:0}
+.tab{padding:8px 18px;border-radius:99px;font-size:.74rem;font-weight:700;background:#fff;border:1px solid var(--line2);color:var(--muted);cursor:pointer;transition:.2s;font-family:var(--font-d)}
+.tab:hover{border-color:var(--gold);color:var(--ink)}
+.tab.active{background:#0a1128;border-color:#0a1128;color:#eed88a;box-shadow:0 8px 20px rgba(10,17,40,.3)}
+.tab-content{display:none}
+.tab-content.active{display:block;background:#fff;border:1px solid var(--line);border-radius:20px;padding:1.4rem;box-shadow:0 4px 14px rgba(10,17,40,.04)}
+.install-step{display:flex;gap:14px;margin-bottom:14px;align-items:flex-start}
+.step-num{width:32px;height:32px;min-width:32px;background:linear-gradient(135deg,#0a1128,#1c2a63);color:#eed88a;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;font-family:var(--font-h)}
+.install-step p{font-size:.84rem;color:#3c4560;padding-top:4px}
+.code-block{background:#0a1128!important;color:#dbe4ff!important;padding:1rem 1.1rem;border-radius:14px;font-size:.74rem;font-family:var(--font-m);overflow-x:auto;margin:12px 0 20px;line-height:1.75;white-space:pre;max-width:100%;border:1px solid rgba(238,216,138,.25)}
+.note-box{background:#fbf7e6;border:1px solid rgba(201,162,39,.45);border-left:4px solid var(--gold);border-radius:12px;padding:.85rem 1.1rem;font-size:.8rem;color:#6b5a10;margin:16px 0}
+/* tables */
+.table-scroll{overflow-x:auto;max-width:100%;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(10,17,40,.04)}
+.compare-table,.commands-table,.field-table{width:100%;border-collapse:collapse;background:#fff;min-width:640px}
+.compare-table th,.commands-table th,.field-table th{text-align:left;padding:12px 16px;font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;border-bottom:2px solid var(--line);background:#f6f3e3}
+.compare-table td,.commands-table td,.field-table td{padding:12px 16px;border-bottom:1px solid var(--line);font-size:.8rem;vertical-align:top;color:#3c4560}
+.compare-table tr:hover td,.commands-table tr:hover td{background:#faf9f2}
+.check{color:#0b5e2f;font-weight:800}
+.cross{color:#ef4444}
+.label-aixer{font-weight:800;color:var(--ink)}
+.cmd-name{font-family:var(--font-m);color:#1d4ed8;font-weight:600;white-space:nowrap;font-size:.76rem}
+.cmd-example{font-family:var(--font-m);color:var(--muted);font-size:.72rem;display:block;margin-top:4px}
+/* project guide */
+.file-tree,.file-structure{background:#0a1128!important;border:1px solid rgba(238,216,138,.25)!important;border-radius:14px;padding:1rem 1.2rem;font-family:var(--font-m)!important;font-size:.72rem!important;line-height:2;color:#dbe4ff!important;margin-bottom:24px;white-space:pre;overflow-x:auto;max-width:100%}
+.file-tree .dir,.file-structure .dir{color:#eed88a!important;font-weight:600}
+.file-tree .file,.file-structure .file{color:#dbe4ff!important}
+.file-tree .arrow,.file-structure .annotation{color:#8b93b0!important}
+.guide-card{background:#fff;border:1px solid var(--line);border-radius:20px;margin-bottom:1rem;overflow:hidden;position:relative;transition:.3s}
+.guide-card:hover{box-shadow:var(--shadow-lg);border-color:rgba(201,162,39,.5)}
+.guide-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0a1128,#c9a227,#eed88a)}
+.guide-card-header{background:linear-gradient(180deg,#f6f3e3,#fff);padding:.9rem 1.2rem;border-bottom:1px solid var(--line);font-size:.92rem;font-weight:700;display:flex;align-items:center;gap:10px;font-family:var(--font-h);color:var(--ink)}
+.guide-card-body{padding:1.2rem}
+.guide-card-body h4{font-size:.84rem;font-weight:700;margin:1rem 0 .4rem;color:var(--ink);font-family:var(--font-h)}
+.guide-card-body h4:first-child{margin-top:0}
+.guide-card-body p{font-size:.8rem;color:var(--muted);line-height:1.7;margin-bottom:10px}
+.guide-card-body ul{margin:8px 0 14px;padding-left:20px}
+.guide-card-body li{font-size:.8rem;color:var(--muted);line-height:1.7;margin-bottom:4px}
+.config-key{font-family:var(--font-m);font-weight:600;color:#6d28d9;font-size:.74rem}
+.config-desc{font-size:.8rem;color:var(--muted);line-height:1.7}
+.edit-highlight{background:#fef2f2;border-left:4px solid #ef4444;padding:12px 16px;border-radius:0 8px 8px 0;margin:12px 0;font-size:.8rem;color:#7f1d1d}
+.edit-tip{background:#f0fdf4;border-left:4px solid #12934c;padding:12px 16px;border-radius:0 8px 8px 0;margin:12px 0;font-size:.8rem;color:#14532d}
+/* pricing */
+.pricing-trial{background:linear-gradient(135deg,#fbf7e6,#f6eecb);border:1px solid rgba(201,162,39,.45);border-radius:16px;padding:1.3rem;text-align:center;max-width:600px;margin:0 auto 1.6rem}
+.pricing-trial h3{font-size:1.05rem;font-weight:800;color:#6b5a10;font-family:var(--font-h)}
+.pricing-trial p{font-size:.82rem;color:#6b5a10;margin-top:4px}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,320px));gap:1rem;justify-content:center;max-width:1000px;margin:0 auto}
+.pricing-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:1.8rem 1.4rem;text-align:center;transition:.3s;position:relative;overflow:hidden}
+.pricing-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:rgba(201,162,39,.5)}
+.pricing-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0a1128,#c9a227,#eed88a)}
+.pricing-card.featured{border-color:rgba(201,162,39,.6);box-shadow:var(--shadow-lg)}
+.pricing-card.featured::before{content:"Best Value";position:absolute;top:12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#a8841c,#e9cf6e);color:#231a02;font-size:.6rem;font-weight:800;padding:4px 14px;border-radius:99px;text-transform:uppercase;letter-spacing:1px;height:auto}
+.pricing-name{font-size:.72rem;font-weight:700;color:var(--muted);margin-bottom:8px;letter-spacing:1.5px;text-transform:uppercase;margin-top:1rem}
+.pricing-price{font-size:2.2rem;font-weight:800;color:var(--ink);margin-bottom:4px;letter-spacing:-1px;font-family:var(--font-h)}
+.pricing-duration{font-size:.78rem;color:var(--muted);margin-bottom:12px}
+.pricing-desc{font-size:.8rem;color:var(--muted);line-height:1.6;margin-bottom:18px}
+.btn-pricing{display:inline-flex;align-items:center;justify-content:center;padding:11px 26px;border-radius:99px;font-size:.78rem;font-weight:700;text-decoration:none;background:#f1f3fa;color:var(--ink);border:1px solid var(--line2);transition:.25s;font-family:var(--font-h)}
+.btn-pricing:hover{border-color:var(--ink);transform:translateY(-2px)}
+.btn-pricing.featured-btn{background:linear-gradient(135deg,#a8841c,#e9cf6e 55%,#c9a227);color:#231a02;box-shadow:0 10px 26px rgba(201,162,39,.4);border:none}
+/* requirements */
+.req-grid{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.req-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:1.5rem 1.2rem;text-align:center;min-width:200px;flex:1;max-width:300px;position:relative;overflow:hidden;transition:.3s}
+.req-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:rgba(201,162,39,.5)}
+.req-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0a1128,#c9a227,#eed88a);opacity:0;transition:.3s}
+.req-card:hover::before{opacity:1}
+/* modal */
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,17,40,.6);backdrop-filter:blur(8px);z-index:200;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:22px;padding:2rem;max-width:480px;width:92%;text-align:center;position:relative;animation:modalIn .25s ease;border:1px solid rgba(201,162,39,.4);box-shadow:0 40px 100px rgba(0,0,0,.35);font-family:var(--font-d)}
+@keyframes modalIn{from{transform:scale(.92) translateY(16px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.modal-box h2{font-size:1.2rem;font-weight:800;margin-bottom:6px;font-family:var(--font-h);color:var(--ink)}
+.modal-box p{font-size:.8rem;color:var(--muted);margin-bottom:20px}
+.modal-close{position:absolute;top:14px;right:14px;background:#f1f3fa;border:1px solid var(--line);width:32px;height:32px;border-radius:50%;font-size:1rem;cursor:pointer;color:var(--muted);line-height:1}
+.modal-close:hover{color:var(--ink);border-color:var(--ink)}
+.modal-source{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--line2);border-radius:14px;text-decoration:none;color:inherit;transition:.2s;margin-bottom:10px;background:#fff}
+.modal-source:hover{border-color:var(--gold);background:#faf9f2;transform:translateY(-1px);box-shadow:var(--shadow)}
+.modal-source-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.2rem}
+.modal-source-info{text-align:left}
+.modal-source-info strong{display:block;font-size:.88rem;font-weight:700;font-family:var(--font-h);color:var(--ink)}
+.modal-source-info span{font-size:.74rem;color:var(--muted)}
+.hamburger{display:none;flex-direction:column;cursor:pointer;gap:5px;background:#0a1128;border:none;padding:10px 9px;border-radius:11px}
+.hamburger span{width:22px;height:2px;background:#eed88a;border-radius:2px;display:block}
+@media(max-width:1020px){.features-grid{grid-template-columns:repeat(2,1fr)}.nav-links{display:none}.burger{display:block}.nav-links.open{display:flex;position:absolute;top:100%;left:12px;right:12px;flex-direction:column;background:#fff;border-radius:18px;padding:10px;box-shadow:var(--shadow-lg);z-index:150}}
+@media(max-width:640px){.features-grid{grid-template-columns:1fr}.container{padding:0 1rem}.tab-content{padding:1rem}.hero img[alt="AIXER Logo"]{height:110px;width:110px}.hero-buttons .btn{width:100%;max-width:320px}.table-scroll{margin:0 -4px}}
 
-        /* Hero */
-        .hero {
-            padding: 100px 0 80px;
-            text-align: center;
-            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
-        }
-        .hero h1 {
-            font-size: clamp(40px, 5vw, 64px);
-            font-weight: 800;
-            letter-spacing: -1.5px;
-            line-height: 1.1;
-            margin-bottom: 20px;
-        }
-        .hero h1 span {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero p {
-            font-size: 18px; color: #6b7280; max-width: 680px;
-            margin: 0 auto 40px;
-        }
-        .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-        .btn {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 14px 32px; border-radius: 12px;
-            font-size: 16px; font-weight: 600; text-decoration: none;
-            transition: all 0.2s; cursor: pointer; border: none;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            color: #fff;
-            box-shadow: 0 4px 24px rgba(37,99,235,0.3);
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(37,99,235,0.4);
-        }
-
-        /* Download Modal */
-        .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); z-index: 200;
-            align-items: center; justify-content: center;
-        }
-        .modal-overlay.open { display: flex; }
-        .modal-box {
-            background: #fff; border-radius: 20px; padding: 36px; max-width: 480px; width: 90%;
-            text-align: center; position: relative; animation: modalIn 0.25s ease;
-        }
-        @keyframes modalIn {
-            from { transform: scale(0.9) translateY(20px); opacity: 0; }
-            to { transform: scale(1) translateY(0); opacity: 1; }
-        }
-        .modal-box h2 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
-        .modal-box p { font-size: 14px; color: #6b7280; margin-bottom: 24px; }
-        .modal-close {
-            position: absolute; top: 16px; right: 16px; background: none; border: none;
-            font-size: 24px; cursor: pointer; color: #9ca3af; line-height: 1;
-        }
-        .modal-close:hover { color: #1a1a2e; }
-        .modal-source {
-            display: flex; align-items: center; gap: 14px;
-            padding: 16px 20px; border: 2px solid #eaeef2; border-radius: 14px;
-            text-decoration: none; color: inherit; transition: all 0.2s; margin-bottom: 12px;
-        }
-        .modal-source:hover { border-color: #2563eb; background: #f8fafc; transform: translateY(-1px); }
-        .modal-source-icon {
-            width: 44px; height: 44px; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-            font-size: 22px;
-        }
-        .modal-source-info { text-align: left; }
-        .modal-source-info strong { display: block; font-size: 15px; font-weight: 600; }
-        .modal-source-info span { font-size: 13px; color: #6b7280; }
-        .btn-outline {
-            background: transparent;
-            color: #2563eb;
-            border: 2px solid #2563eb;
-        }
-        .btn-outline:hover {
-            background: #2563eb;
-            color: #fff;
-        }
-        .btn-green {
-            background: #16a34a; color: #fff;
-            box-shadow: 0 4px 24px rgba(22,163,74,0.3);
-        }
-        .btn-green:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(22,163,74,0.4);
-        }
-        .btn-whatsapp {
-            background: #25D366; color: #fff;
-            box-shadow: 0 4px 24px rgba(37,211,102,0.3);
-        }
-        .btn-whatsapp:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(37,211,102,0.4);
-        }
-
-        /* Sections */
-        section { padding: 80px 0; }
-        .section-title {
-            font-size: 32px; font-weight: 700;
-            text-align: center; margin-bottom: 16px;
-            letter-spacing: -0.5px;
-        }
-        .section-subtitle {
-            text-align: center; color: #6b7280; font-size: 16px;
-            max-width: 600px; margin: 0 auto 48px;
-        }
-
-        /* Features Grid */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px;
-        }
-        .feature-card {
-            background: #f8fafc;
-            border: 1px solid #eaeef2;
-            border-radius: 16px;
-            padding: 28px;
-            transition: all 0.2s;
-        }
-        .feature-card:hover {
-            border-color: #2563eb;
-            box-shadow: 0 4px 24px rgba(37,99,235,0.08);
-            transform: translateY(-2px);
-        }
-        .feature-icon {
-            width: 44px; height: 44px;
-            background: linear-gradient(135deg, #dbeafe, #ede9fe);
-            border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 22px; margin-bottom: 16px;
-        }
-        .feature-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
-        .feature-card p { font-size: 14px; color: #6b7280; line-height: 1.6; }
-
-        /* Tabs */
-        .tabs { display: flex; gap: 4px; background: #f1f5f9; padding: 4px; border-radius: 12px; margin-bottom: 32px; justify-content: center; flex-wrap: wrap; }
-        .tab { padding: 10px 24px; border-radius: 8px; border: none; background: transparent; font-size: 14px; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; }
-        .tab.active { background: #fff; color: #1a1a2e; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-        .tab:hover:not(.active) { color: #2563eb; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-
-        /* Install Guide */
-        .install-step { display: flex; gap: 16px; margin-bottom: 16px; align-items: flex-start; }
-        .step-num {
-            width: 32px; height: 32px; min-width: 32px;
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            color: #fff; border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 14px; font-weight: 700;
-        }
-        .install-step p { font-size: 15px; color: #374151; padding-top: 4px; }
-        .install-step code {
-            background: #f1f5f9; padding: 2px 8px; border-radius: 4px;
-            font-size: 13px; color: #2563eb; font-family: 'JetBrains Mono', monospace;
-        }
-        .code-block {
-            background: #1e293b; color: #e2e8f0; padding: 16px 20px;
-            border-radius: 12px; font-size: 14px; font-family: 'JetBrains Mono', monospace;
-            overflow-x: auto; margin: 12px 0 24px; line-height: 1.7;
-            white-space: pre;
-        }
-        .note-box {
-            background: #fffbeb; border: 1px solid #fde68a;
-            border-radius: 12px; padding: 16px 20px; font-size: 14px; color: #92400e; margin: 16px 0;
-        }
-
-        /* Commands Table */
-        .commands-table { width: 100%; border-collapse: collapse; }
-        .commands-table th {
-            text-align: left; padding: 12px 16px;
-            font-size: 13px; font-weight: 600; color: #6b7280;
-            text-transform: uppercase; letter-spacing: 0.5px;
-            border-bottom: 2px solid #eaeef2;
-        }
-        .commands-table td {
-            padding: 14px 16px; border-bottom: 1px solid #f1f5f9;
-            font-size: 14px; vertical-align: top;
-        }
-        .commands-table tr:hover td { background: #f8fafc; }
-        .cmd-name {
-            font-family: 'JetBrains Mono', monospace;
-            color: #2563eb; font-weight: 500; white-space: nowrap;
-        }
-        .cmd-desc { color: #374151; }
-        .cmd-example {
-            font-family: 'JetBrains Mono', monospace;
-            color: #6b7280; font-size: 13px; display: block; margin-top: 4px;
-        }
-
-        /* Comparison Table */
-        .compare-table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 12px; overflow: hidden; border: 1px solid #eaeef2; }
-        .compare-table th { background: #f8fafc; padding: 14px 20px; font-size: 14px; font-weight: 600; text-align: left; border-bottom: 1px solid #eaeef2; }
-        .compare-table td { padding: 12px 20px; font-size: 14px; border-bottom: 1px solid #f1f5f9; }
-        .compare-table tr:last-child td { border-bottom: none; }
-        .check { color: #16a34a; font-weight: 700; }
-        .cross { color: #ef4444; }
-        .label-aixer { background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
-
-        /* Project Guide */
-        .file-tree { background: #f8fafc; border: 1px solid #eaeef2; border-radius: 12px; padding: 20px 24px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 2; color: #374151; margin-bottom: 32px; }
-        .file-tree .dir { color: #2563eb; font-weight: 600; }
-        .file-tree .file { color: #374151; }
-        .file-tree .arrow { color: #9ca3af; }
-        .file-structure { background: #f8fafc; border: 1px solid #eaeef2; border-radius: 12px; padding: 24px 28px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 2.2; color: #374151; white-space: pre; overflow-x: auto; margin-bottom: 32px; }
-        .file-structure .dir { color: #2563eb; font-weight: 600; }
-        .file-structure .file { color: #374151; }
-        .file-structure .annotation { color: #9ca3af; }
-        .guide-card { background: #ffffff; border: 1px solid #eaeef2; border-radius: 16px; margin-bottom: 24px; overflow: hidden; }
-        .guide-card-header { background: #f8fafc; padding: 16px 24px; border-bottom: 1px solid #eaeef2; font-size: 18px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
-        .guide-card-body { padding: 24px; }
-        .guide-card-body h4 { font-size: 15px; font-weight: 600; margin: 20px 0 8px; color: #1e293b; }
-        .guide-card-body h4:first-child { margin-top: 0; }
-        .guide-card-body p { font-size: 14px; color: #4b5563; line-height: 1.7; margin-bottom: 12px; }
-        .guide-card-body ul { margin: 8px 0 16px; padding-left: 20px; }
-        .guide-card-body li { font-size: 14px; color: #4b5563; line-height: 1.7; margin-bottom: 4px; }
-        .guide-card-body .code-block { margin: 12px 0 16px; }
-        .config-doc { margin-bottom: 12px; }
-        .config-key { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #7c3aed; font-size: 13px; }
-        .config-desc { font-size: 14px; color: #4b5563; line-height: 1.7; }
-        .config-desc code { background: #f1f5f9; padding: 1px 6px; border-radius: 4px; font-size: 12px; color: #2563eb; }
-        .inline-code { background: #f1f5f9; padding: 2px 8px; border-radius: 4px; font-size: 13px; color: #2563eb; font-family: 'JetBrains Mono', monospace; }
-        .edit-highlight { background: #fef2f2; border-left: 4px solid #ef4444; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; }
-        .edit-highlight strong { color: #dc2626; }
-        .edit-tip { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; }
-        .edit-tip strong { color: #16a34a; }
-        .field-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
-        .field-table th { text-align: left; padding: 10px 14px; font-size: 12px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #eaeef2; background: #f8fafc; }
-        .field-table td { padding: 10px 14px; border-bottom: 1px solid #f1f5f9; font-size: 13px; vertical-align: top; }
-        .field-table .f-name { font-family: 'JetBrains Mono', monospace; color: #7c3aed; font-weight: 500; white-space: nowrap; }
-        .field-table .f-type { font-family: 'JetBrains Mono', monospace; color: #059669; font-size: 12px; }
-        .field-table .f-desc { color: #4b5563; font-size: 13px; }
-
-        /* Pricing */
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto; }
-        .pricing-card { background: #ffffff; border: 2px solid #eaeef2; border-radius: 20px; padding: 32px 24px; text-align: center; transition: all 0.3s; position: relative; }
-        .pricing-card:hover { border-color: #2563eb; transform: translateY(-4px); box-shadow: 0 12px 40px rgba(37,99,235,0.1); }
-        .pricing-card.featured { border-color: #2563eb; box-shadow: 0 8px 32px rgba(37,99,235,0.15); }
-        .pricing-card.featured::before { content: "Best Value"; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #2563eb, #7c3aed); color: #fff; font-size: 12px; font-weight: 700; padding: 4px 16px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .pricing-name { font-size: 16px; font-weight: 600; color: #6b7280; margin-bottom: 8px; }
-        .pricing-price { font-size: 40px; font-weight: 800; color: #1a1a2e; margin-bottom: 4px; letter-spacing: -1px; }
-        .pricing-price span { font-size: 18px; font-weight: 500; color: #9ca3af; }
-        .pricing-duration { font-size: 14px; color: #6b7280; margin-bottom: 16px; }
-        .pricing-desc { font-size: 14px; color: #4b5563; line-height: 1.6; margin-bottom: 20px; }
-        .pricing-trial { background: linear-gradient(135deg, #fef3c7, #fde68a); border-radius: 12px; padding: 20px 24px; text-align: center; max-width: 600px; margin: 0 auto 40px; }
-        .pricing-trial h3 { font-size: 22px; font-weight: 800; color: #92400e; }
-        .pricing-trial p { font-size: 15px; color: #78350f; margin-top: 4px; }
-        .btn-pricing { display: inline-block; padding: 12px 32px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; background: #f1f5f9; color: #374151; transition: all 0.2s; }
-        .btn-pricing:hover { background: #2563eb; color: #fff; }
-        .btn-pricing.featured-btn { background: linear-gradient(135deg, #2563eb, #7c3aed); color: #fff; box-shadow: 0 4px 16px rgba(37,99,235,0.3); }
-        .btn-pricing.featured-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,0.4); }
-
-        /* Footer */
-        footer {
-            border-top: 1px solid #eaeef2;
-            padding: 40px 0;
-            text-align: center;
-            color: #9ca3af;
-            font-size: 14px;
-        }
-
-        /* Hamburger */
-        .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; background: none; border: none; padding: 4px; }
-        .hamburger span { width: 24px; height: 2px; background: #1a1a2e; border-radius: 2px; transition: all 0.2s; }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero { padding: 60px 0 40px; }
-            .features-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(255,255,255,0.98); backdrop-filter: blur(12px); padding: 16px 24px; border-bottom: 1px solid #eaeef2; gap: 12px; }
-            .nav-links.open { display: flex; }
-            .hamburger { display: flex; }
-            .commands-table { font-size: 13px; }
-        }
-    </style>
+</style>
 </head>
 <body>
+<div id="loader"><div class="loader-mark"><i class="fas fa-cube"></i></div><div class="loader-bar"><span></span></div><p>BHARAT TECHNOLOGIES • AIXER</p></div>
+<canvas id="three-canvas"></canvas>
+<div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+<div id="scroll-progress"></div>
+<a href="https://wa.me/919175016427" target="_blank" class="fab-wa" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+<button id="toTop" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+<div class="announce"><span class="dot"></span> <b>AIXER • EXTENSION BUILDER</b> &nbsp;—&nbsp; CLI + GUI • 30+ SDK presets &nbsp; <b>• 24×7 WhatsApp Support</b></div>
 
-<nav>
-    <div class="container">
-        <div style="display:flex; align-items:center; gap:16px;">
-            <a href="https://btechdev.in" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;border:1.5px solid #2563eb;color:#2563eb;font-weight:600;font-size:13px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='#2563eb';this.style.color='#fff';" onmouseout="this.style.background='transparent';this.style.color='#2563eb';">&#8592; Back to Main Site</a>
-            <div class="logo"><a href="https://btechdev.in/aixer#" style="text-decoration: none; background: inherit; -webkit-background-clip: inherit; -webkit-text-fill-color: inherit;">AIXER</a></div>
-        </div>
-        <div class="nav-links">
-            <a href="#features">Features</a>
-            <a href="#install">Installation</a>
-            <a href="#pricing">Pricing</a>
-            <a href="#commands">Commands</a>
-            <a href="#project-guide">Project Guide</a>
-            <a href="#contact">Contact</a>
-            <button class="hamburger" id="hamburger" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </div>
-</nav>
+
+<nav id="mainNav"><div class="nav-inner">
+<a href="index.html" class="brand"><div class="brand-mark"><i class="fas fa-cube"></i></div><div class="brand-name">BHARAT TECHNOLOGIES<small>BTECHDEV • GLOBAL • AIXER</small></div></a>
+<div class="nav-links" id="navLinks"><a href="#features">Features</a><a href="#install">Installation</a><a href="#pricing">Pricing</a><a href="#commands">Commands</a><a href="#project-guide">Project Guide</a><a href="#contact">Contact</a></div>
+<div class="nav-cta"><a href="index.html" class="btn btn-ghost btn-sm"><i class="fas fa-arrow-left"></i> Back to Main Site</a><a href="javascript:void(0)" onclick="openDownloadModal()" class="btn btn-gold btn-sm"><i class="fas fa-download"></i> Download</a><button class="burger" id="burger" aria-label="Menu"><i class="fas fa-bars"></i></button><button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div>
+</div></nav>
 
 <!-- Hero -->
-<section class="hero">
-    <div class="container">
-        <img src="https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/x2q917cyweuBOrrmFDYjUIcPTTtLKXBq_e2848b3bd01882807f829d8146c7b827fac98eb8d3f2445008fbebc86b634f0d.png" alt="AIXER Logo" style="height: 240px; margin-bottom: 12px;">
-        <p style="font-size: 18px; font-weight: 700; color: #1a1a2e; letter-spacing: 1px; margin-bottom: 20px; text-transform: uppercase;">Automated Extension Building, No More Manual Hustle</p>
-        <h1>AIXER &mdash; Empowers Everyone To Build Extensions</h1>
-        <p style="font-size: clamp(14px, 1.75vw, 22px); font-weight: 500; color: #6b7280; max-width: 700px; margin: 0 auto 20px; line-height: 1.5;">Make Extensions For App Inventor, Kodular, Niotron &amp; Other AI2 Based No-code App Builders.</p>
-        <p>
+<section class="hero" id="home">
+    <div class="wrap">
+        <img src="https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/x2q917cyweuBOrrmFDYjUIcPTTtLKXBq_e2848b3bd01882807f829d8146c7b827fac98eb8d3f2445008fbebc86b634f0d.png" alt="AIXER Logo" class="aixer-logo aixer-logo-glow">
+        <div class="eyebrow reveal"><span class="pulse"><i class="fas fa-bolt"></i></span> Automated Extension Building • No More Manual Hustle</div>
+        <h1 class="hero-h1 reveal">AIXER &mdash; Empowers Everyone To <span class="serif">Build Extensions</span></h1>
+        <p class="lede reveal">Make Extensions For App Inventor, Kodular, Niotron &amp; Other AI2 Based No-code App Builders.</p>
+        <p class="desc reveal">
             AIXER is a powerful build system for MIT App Inventor extensions. Create dependency-based
             extensions like AdMob, Play Billing, ExoPlayer, and more with CLI tools, a desktop GUI,
             and a reproducible packaging pipeline.
         </p>
         <div class="hero-buttons">
-            <a href="javascript:void(0)" onclick="openDownloadModal()" class="btn btn-primary">
+            <a href="javascript:void(0)" onclick="openDownloadModal()" class="btn btn-gold">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 Download AIXER
             </a>
@@ -375,7 +478,7 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                 Purchase License
             </a>
-            <a href="https://wa.me/919175016427" class="btn btn-whatsapp">
+            <a href="https://wa.me/919175016427" class="btn btn-green">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 Contact Support
             </a>
@@ -383,7 +486,7 @@
     </div>
 </section>
 
-<div style="background: linear-gradient(270deg, #2563eb, #7c3aed, #ec4899, #2563eb); background-size: 400% 400%; color: #fff; text-align: center; padding: 12px 24px; font-size: 15px; font-weight: 600; letter-spacing: 0.3px; animation: flash 3s ease-in-out infinite;">
+<div class="flash-banner">
     Coming soon in next update: AI Integration To Automate Everything :)
 </div>
 
@@ -462,10 +565,9 @@
 
 <!-- Capabilities -->
 <section style="padding: 40px 0 80px;">
-    <div class="container">
-        <h2 class="section-title">Capabilities</h2>
-        <p class="section-subtitle">AIXER ships with professional-grade tooling for building, testing, and shipping App Inventor extensions.</p>
-        <table class="compare-table">
+    <div class="wrap">
+        <div class="sec-head reveal"><div class="sec-no">Bharat Technologies • Aixer</div><h2 class="sec-title">Capabilities</h2><p class="sec-sub">AIXER ships with professional-grade tooling for building, testing, and shipping App Inventor extensions.</p><div class="gold-div"></div></div>
+        <div class="table-scroll"><table class="compare-table">
             <tr>
                 <th>Capability</th>
                 <th><span class="label-aixer">AIXER</span></th>
@@ -481,108 +583,107 @@
             <tr><td>Markdown docs (<code>build --docs</code>)</td><td class="check">Yes</td></tr>
             <tr><td>Annotation stripping in output <code>.aix</code></td><td class="check">Yes (default)</td></tr>
             <tr><td>FAST / Rush project migration</td><td class="check"><code>aixer migrate</code></td></tr>
-        </table>
+        </table></div>
     </div>
 </section>
 
 <!-- Features -->
 <section id="features" style="background: #f8fafc;">
-    <div class="container">
-        <h2 class="section-title">All Features</h2>
-        <p class="section-subtitle">AIXER ships with everything you need to build, test, and ship professional App Inventor extensions.</p>
+    <div class="wrap">
+        <div class="sec-head reveal"><div class="sec-no">Bharat Technologies • Aixer</div><h2 class="sec-title">All <em>Features</em></h2><p class="sec-sub">AIXER ships with everything you need to build, test, and ship professional App Inventor extensions.</p><div class="gold-div"></div></div>
         <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">&#x1F4C2;</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon feat-ic">&#x1F4C2;</div>
                 <h3>Extension Scaffolding</h3>
                 <p>Create new extension projects instantly with <code>aixer init</code>. Supports Java and Kotlin with optional SDK presets.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#x2699;&#xFE0F;</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon feat-ic">&#x2699;&#xFE0F;</div>
                 <h3>Dependency Resolution</h3>
                 <p>Automatically resolve Maven &amp; Gradle dependencies. Auto-detect dependencies from Java/Kotlin imports.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#x1F4E6;</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon feat-ic">&#x1F4E6;</div>
                 <h3>30+ SDK Presets</h3>
                 <p>Curated SDK presets for AdMob, Lottie, Play Billing, ExoPlayer, OneSignal, Firebase, and more.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#x1F680;</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon feat-ic">&#x1F680;</div>
                 <h3>Release Builds</h3>
                 <p>Build production-ready .aix files with ProGuard/R8 optimization. Smaller, obfuscated, and secure.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#x1F4BB;</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon feat-ic">&#x1F4BB;</div>
                 <h3>Desktop GUI (AIXER Studio)</h3>
                 <p>Launch the AIXER Studio desktop application with <code>aixer gui</code> for a visual build experience.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#x1F50D;</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon feat-ic">&#x1F50D;</div>
                 <h3>Environment Doctor</h3>
                 <p>Audit your development environment and project with <code>aixer doctor</code> — catch issues early.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#x1F4DC;</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon feat-ic">&#x1F4DC;</div>
                 <h3>Markdown Documentation</h3>
                 <p>Auto-generate Markdown documentation for your extension with <code>aixer build --docs</code>.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#x1F9F0;</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon feat-ic">&#x1F9F0;</div>
                 <h3>Custom XML Resources</h3>
                 <p>Add custom XML for ExoPlayer, FileProvider, layouts, drawables, and more. Validated with <code>aixer xml check</code>.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#x1F504;</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon feat-ic">&#x1F504;</div>
                 <h3>FAST / Rush Migration</h3>
                 <p>Seamlessly migrate existing FAST or Rush projects to AIXER with <code>aixer migrate</code>.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#x1F3E0;</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon feat-ic">&#x1F3E0;</div>
                 <h3>Kotlin Support</h3>
                 <p>Write your extensions in Kotlin with full build support and dependency resolution.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#x1F5C4;&#xFE0F;</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon feat-ic">&#x1F5C4;&#xFE0F;</div>
                 <h3>Helper Dropdown Blocks</h3>
                 <p>Support for red dropdown helper blocks via <code>@Options</code> and <code>OptionList</code> enums.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#x1F310;</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon feat-ic">&#x1F310;</div>
                 <h3>Multi-Platform</h3>
                 <p>Works on Windows, Linux, and macOS with bundled Python and JDK support.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#x1F4E6;</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon feat-ic">&#x1F4E6;</div>
                 <h3>Global JAR Management</h3>
                 <p>Manage shared JARs across all projects with <code>aixer global-jar</code> commands.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#x1F4F1;</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon feat-ic">&#x1F4F1;</div>
                 <h3>Multi-Component Extensions</h3>
                 <p>Build extensions with multiple components in a single .aix package.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#x267B;&#xFE0F;</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon feat-ic">&#x267B;&#xFE0F;</div>
                 <h3>Annotation Stripping</h3>
                 <p>Automatically strip compile-time annotations from shipped bytecode for smaller .aix files.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#x1F527;</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon feat-ic">&#x1F527;</div>
                 <h3>Dex &amp; Tools Support</h3>
                 <p>Dex JAR files with D8/R8 and manage optional build tools like rt.jar, desugar.jar, jetifier.jar.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#x1F4F6;</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon feat-ic">&#x1F4F6;</div>
                 <h3>Future Updates</h3>
                 <p>Update AIXER to the latest version with <code>aixer update</code>.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#x1F3C6;</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon feat-ic">&#x1F3C6;</div>
                 <h3>GitHub Actions CI</h3>
                 <p>Automatically generated GitHub Actions workflow on <code>init</code> for continuous integration.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">&#x1F9EA;</div>
+            <div class="feature-card reveal">
+                <div class="feature-icon feat-ic">&#x1F9EA;</div>
                 <h3>Smart Auto Build Pipeline</h3>
                 <p>AIXER is smart enough to automatically handle to bring the extensions in your hands with its smart auto proguard rules handling, shrinking and sdks' jar packaging capabilities.</p>
             </div>
@@ -592,9 +693,8 @@
 
 <!-- Installation -->
 <section id="install">
-    <div class="container">
-        <h2 class="section-title">Installation Guides</h2>
-        <p class="section-subtitle">Choose your platform and follow the steps to get AIXER up and running.</p>
+    <div class="wrap">
+        <div class="sec-head reveal"><div class="sec-no">Bharat Technologies • Aixer</div><h2 class="sec-title">Installation <em>Guides</em></h2><p class="sec-sub">Choose your platform and follow the steps to get AIXER up and running.</p><div class="gold-div"></div></div>
 
         <div class="tabs" id="installTabs">
             <button class="tab active" data-tab="windows">Windows</button>
@@ -678,9 +778,8 @@
 
 <!-- Pricing -->
 <section id="pricing">
-    <div class="container">
-        <h2 class="section-title">Choose Your Plan</h2>
-        <p class="section-subtitle">Get started with a free trial, then unlock all features with a premium license.</p>
+    <div class="wrap">
+        <div class="sec-head reveal"><div class="sec-no">Bharat Technologies • Aixer</div><h2 class="sec-title">Choose Your <em>Plan</em></h2><p class="sec-sub">Get started with a free trial, then unlock all features with a premium license.</p><div class="gold-div"></div></div>
 
         <div class="pricing-trial">
             <h3>&#x1F3C6; 1 Day Free Trial</h3>
@@ -703,11 +802,10 @@
 
 <!-- Commands -->
 <section id="commands" style="background: #f8fafc;">
-    <div class="container">
-        <h2 class="section-title">Commands &amp; Usage</h2>
-        <p class="section-subtitle">Master AIXER with its complete set of CLI commands for building, managing, and deploying extensions.</p>
+    <div class="wrap">
+        <div class="sec-head reveal"><div class="sec-no">Bharat Technologies • Aixer</div><h2 class="sec-title">Commands &amp; <em>Usage</em></h2><p class="sec-sub">Master AIXER with its complete set of CLI commands for building, managing, and deploying extensions.</p><div class="gold-div"></div></div>
 
-        <table class="commands-table">
+        <div class="table-scroll"><table class="commands-table">
             <thead>
                 <tr>
                     <th>Command</th>
@@ -807,18 +905,17 @@
                     <td><span class="cmd-example">aixer version</span></td>
                 </tr>
             </tbody>
-        </table>
+        </table></div>
     </div>
 </section>
 
 <!-- Project Guide -->
 <section id="project-guide">
-    <div class="container">
-        <h2 class="section-title">Project Guide</h2>
-        <p class="section-subtitle">Understand the AIXER project structure, key configuration files, and how to edit them for your extensions.</p>
+    <div class="wrap">
+        <div class="sec-head reveal"><div class="sec-no">Bharat Technologies • Aixer</div><h2 class="sec-title">Project <em>Guide</em></h2><p class="sec-sub">Understand the AIXER project structure, key configuration files, and how to edit them for your extensions.</p><div class="gold-div"></div></div>
 
         <!-- Project Structure -->
-        <div class="guide-card">
+        <div class="guide-card reveal">
             <div class="guide-card-header">&#x1F4C1; Project Structure</div>
             <div class="guide-card-body">
                 <p>When you run <code class="inline-code">aixer init MyExtension</code>, AIXER generates the following project layout:</p>
@@ -844,7 +941,7 @@
         </div>
 
         <!-- Java Source (AdmobAdsPro.java) -->
-        <div class="guide-card">
+        <div class="guide-card reveal">
             <div class="guide-card-header">&#x1F4D2; Java Source File (AdmobAdsPro.java / YourExtension.java)</div>
             <div class="guide-card-body">
                 <p>Your extension's main Java class extends <code class="inline-code">AndroidNonvisibleComponent</code> and uses App Inventor annotations. Here is a typical AdMob extension as an example:</p>
@@ -886,7 +983,7 @@ public class AdmobAdsPro extends AndroidNonvisibleComponent {
 }</div>
 
                 <h4>What to change and why</h4>
-                <table class="field-table">
+                <div class="table-scroll"><table class="field-table">
                     <tr>
                         <th>Element</th>
                         <th>Change</th>
@@ -927,14 +1024,14 @@ public class AdmobAdsPro extends AndroidNonvisibleComponent {
                         <td class="f-desc">Add methods with this annotation</td>
                         <td class="f-desc">Each annotated method becomes a block in App Inventor</td>
                     </tr>
-                </table>
+                </table></div>
 
                 <div class="edit-tip"><strong>Note:</strong> You can also use <code class="inline-code">@SimpleEvent</code> to fire events back to App Inventor, <code class="inline-code">@SimpleProperty</code> for properties, and <code class="inline-code">@Options</code> for dropdown helper blocks. Use <code class="inline-code">aixer init --lang kotlin</code> to generate a Kotlin version instead.</div>
             </div>
         </div>
 
         <!-- aixer.yml -->
-        <div class="guide-card">
+        <div class="guide-card reveal">
             <div class="guide-card-header">&#x2699;&#xFE0F; aixer.yml — Main Configuration File</div>
             <div class="guide-card-body">
                 <p>This is the central configuration file for your AIXER project. AIXER reads this file to understand how to build your extension, what dependencies to resolve, and which tools to use.</p>
@@ -974,7 +1071,7 @@ generate_docs: false               # Auto-generate docs on build
 sdks: []                           # SDK preset IDs</div>
 
                 <h4>Key fields explained &mdash; what to change and why</h4>
-                <table class="field-table">
+                <div class="table-scroll"><table class="field-table">
                     <tr>
                         <th>Field</th>
                         <th>What to Change</th>
@@ -1030,14 +1127,14 @@ sdks: []                           # SDK preset IDs</div>
                         <td class="f-desc">Add preset IDs like <code class="inline-code">admob</code>, <code class="inline-code">billing</code>, <code class="inline-code">lottie</code></td>
                         <td class="f-desc">Pre-configures dependencies, ProGuard rules, and manifest entries. Use <code class="inline-code">aixer sdk list</code> to see all available presets</td>
                     </tr>
-                </table>
+                </table></div>
 
                 <div class="edit-highlight"><strong>Common mistake:</strong> Forgetting to run <code class="inline-code">aixer sync</code> after adding new dependencies in <code class="inline-code">dependencies.remote</code>. Always run sync before building!</div>
             </div>
         </div>
 
         <!-- aixer_jars.yml -->
-        <div class="guide-card">
+        <div class="guide-card reveal">
             <div class="guide-card-header">&#x1F4E6; aixer_jars.yml — JAR Whitelist / Blacklist</div>
             <div class="guide-card-body">
                 <p>This file is auto-generated by <code class="inline-code">aixer build</code> and controls which JARs are included in or excluded from your final <code class="inline-code">.aix</code> file. You can edit it to fine-tune the content of your extension package.</p>
@@ -1058,7 +1155,7 @@ blacklist:
   - annotations</div>
 
                 <h4>How to edit &mdash; what to change and why</h4>
-                <table class="field-table">
+                <div class="table-scroll"><table class="field-table">
                     <tr>
                         <th>Section</th>
                         <th>Usage</th>
@@ -1074,14 +1171,14 @@ blacklist:
                         <td class="f-desc">Add partial JAR names to <strong>exclude</strong> them from the .aix</td>
                         <td class="f-desc">Use to strip unwanted libraries (e.g. <code class="inline-code">kotlin-stdlib</code> if the user already has it, or documentation JARs). Reduces .aix file size</td>
                     </tr>
-                </table>
+                </table></div>
 
                 <div class="edit-tip"><strong>Tip:</strong> You can change the output path of this file by adding <code class="inline-code">jars_config: aixer_jars.yml</code> to your <code class="inline-code">aixer.yml</code>. Delete this file to regenerate it from scratch on the next build.</div>
             </div>
         </div>
 
         <!-- AndroidManifest.xml -->
-        <div class="guide-card">
+        <div class="guide-card reveal">
             <div class="guide-card-header">&#x1F4F1; AndroidManifest.xml — App Permissions &amp; Components</div>
             <div class="guide-card-body">
                 <p>You can add permissions, activities etc. directly to AndroidManifest.xml file.</p>
@@ -1093,21 +1190,20 @@ blacklist:
 
 <!-- Requirements -->
 <section id="requirements">
-    <div class="container">
-        <h2 class="section-title">Requirements</h2>
-        <p class="section-subtitle">AIXER is lightweight and works with standard development tools.</p>
-        <div style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;">
-            <div style="background: #f8fafc; border: 1px solid #eaeef2; border-radius: 16px; padding: 28px; text-align: center; min-width: 180px;">
+    <div class="wrap">
+        <div class="sec-head reveal"><div class="sec-no">Bharat Technologies • Aixer</div><h2 class="sec-title">Requirements</h2><p class="sec-sub">AIXER is lightweight and works with standard development tools.</p><div class="gold-div"></div></div>
+        <div class="req-grid">
+            <div class="req-card reveal">
                 <div style="font-size: 36px; margin-bottom: 8px;">&#x1F40D;</div>
                 <h3 style="font-size: 16px; font-weight: 600;">Python 3.8+</h3>
                 <p style="font-size: 13px; color: #6b7280;">Bundled with Windows installer</p>
             </div>
-            <div style="background: #f8fafc; border: 1px solid #eaeef2; border-radius: 16px; padding: 28px; text-align: center; min-width: 180px;">
+            <div class="req-card reveal">
                 <div style="font-size: 36px; margin-bottom: 8px;">&#x2615;</div>
                 <h3 style="font-size: 16px; font-weight: 600;">JDK 8+</h3>
                 <p style="font-size: 13px; color: #6b7280;">JDK 17 recommended (auto-installed)</p>
             </div>
-            <div style="background: #f8fafc; border: 1px solid #eaeef2; border-radius: 16px; padding: 28px; text-align: center; min-width: 180px;">
+            <div class="req-card reveal">
                 <div style="font-size: 36px; margin-bottom: 8px;">&#x1F5A5;&#xFE0F;</div>
                 <h3 style="font-size: 16px; font-weight: 600;">Windows / Linux / macOS</h3>
                 <p style="font-size: 13px; color: #6b7280;">Fully cross-platform</p>
@@ -1117,17 +1213,16 @@ blacklist:
 </section>
 
 <!-- Contact -->
-<section id="contact" style="background: #f8fafc;">
-    <div class="container" style="text-align: center;">
-        <h2 class="section-title">Get Help</h2>
-        <p class="section-subtitle">Have questions or need support? We're here to help.</p>
+<section id="contact">
+    <div class="wrap" style="text-align: center;">
+        <div class="sec-head reveal"><div class="sec-no">Bharat Technologies • Aixer</div><h2 class="sec-title">Get <em>Help</em></h2><p class="sec-sub">Have questions or need support? We're here to help.</p><div class="gold-div"></div></div>
         <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-            <a href="https://wa.me/919175016427" class="btn btn-whatsapp">
+            <a href="https://wa.me/919175016427" class="btn btn-green">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 Contact via WhatsApp
             </a>
             <a href="https://www.paypal.com/ncp/payment/QB6J8MEH3ERD2" class="btn btn-green">Purchase License</a>
-            <a href="javascript:void(0)" onclick="openDownloadModal()" class="btn btn-primary">Download AIXER</a>
+            <a href="javascript:void(0)" onclick="openDownloadModal()" class="btn btn-gold">Download AIXER</a>
         </div>
     </div>
 </section>
@@ -1155,44 +1250,32 @@ blacklist:
     </div>
 </div>
 
-<footer>
-    <div class="container">
-        <p>AIXER &mdash; AIX Extension Builder for App Inventor, Kodular, Niotron. Developed by Bharat Technologies.</p>
-        <p style="margin-top: 8px;">&copy; 2025 Bharat Technologies. All rights reserved.</p>
-    </div>
-</footer>
+<footer><div class="wrap">
+<div class="foot-grid">
+<div><div style="display:flex;align-items:center;gap:10px;margin-bottom:.8rem"><div class="brand-mark"><i class="fas fa-cube"></i></div><div style="font-family:var(--font-h);font-weight:800;color:#fff">BHARAT TECHNOLOGIES<div style="font-family:var(--font-m);font-weight:400;font-size:.6rem;letter-spacing:2.5px;color:#eed88a">BTECHDEV • AIXER</div></div></div><p style="font-size:.78rem;max-width:340px">AIXER &mdash; AIX Extension Builder for App Inventor, Kodular, Niotron. Developed by Bharat Technologies.</p><p style="font-size:.72rem;margin-top:.7rem">UPI for India • PayPal worldwide • WhatsApp: +91-9175016427</p></div>
+<div><h4>EXPLORE</h4><a href="index.html#home">Main Site Home</a><a href="index.html#tools">Tools &amp; Aixer</a><a href="index.html#extensions">Extensions</a><a href="index.html#services">Services</a><a href="index.html#contact">Contact</a></div>
+<div><h4>AIXER</h4><a href="#features">Features</a><a href="#install">Installation</a><a href="#pricing">Pricing</a><a href="#commands">Commands</a><a href="#project-guide">Project Guide</a><a href="#contact">Support</a></div>
+</div>
+<div class="foot-bottom">&copy; <span id="yr">2026</span> Bharat Technologies. All rights reserved. AIXER &mdash; AIX Extension Builder for App Inventor, Kodular, Niotron.</div>
+</div></footer>
 
 <script>
-    // Hamburger toggle
-    document.getElementById('hamburger').addEventListener('click', () => {
-        document.querySelector('.nav-links').classList.toggle('open');
-    });
-
-    // Tab switching
-    const tabs = document.querySelectorAll('#installTabs .tab');
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            const target = tab.dataset.tab;
-            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-            document.getElementById('tab-' + target).classList.add('active');
-        });
-    });
-
-    // Download Modal
-    function openDownloadModal() {
-        document.getElementById('downloadModal').classList.add('open');
-    }
-    function closeDownloadModal() {
-        document.getElementById('downloadModal').classList.remove('open');
-    }
-    document.getElementById('downloadModal').addEventListener('click', (e) => {
-        if (e.target === e.currentTarget) closeDownloadModal();
-    });
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeDownloadModal();
-    });
+/* AIXER preserved JS (guarded) */
+(function(){var h=document.getElementById('hamburger');if(h){h.addEventListener('click',function(){var nl=document.getElementById('navLinks');if(nl)nl.classList.toggle('open');});}})();
+(function(){var tabs=document.querySelectorAll('#installTabs .tab');if(tabs.length){tabs.forEach(function(tab){tab.addEventListener('click',function(){tabs.forEach(function(t){t.classList.remove('active')});tab.classList.add('active');var target=tab.dataset.tab;document.querySelectorAll('.tab-content').forEach(function(tc){tc.classList.remove('active')});var el=document.getElementById('tab-'+target);if(el)el.classList.add('active');});});}})();
+function openDownloadModal(){var m=document.getElementById('downloadModal');if(m)m.classList.add('open');}
+function closeDownloadModal(){var m=document.getElementById('downloadModal');if(m)m.classList.remove('open');}
+(function(){var dm=document.getElementById('downloadModal');if(dm){dm.addEventListener('click',function(e){if(e.target===e.currentTarget)closeDownloadModal();});}})();
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDownloadModal();});
+/* index-style chrome JS (adapted, guarded) */
+window.addEventListener('load',function(){setTimeout(function(){var l=document.getElementById('loader');if(l)l.classList.add('hidden');},600);});
+(function(){var y=document.getElementById('yr');if(y)y.textContent=new Date().getFullYear();})();
+window.addEventListener('scroll',function(){var h=document.documentElement;var p=h.scrollTop/Math.max((h.scrollHeight-h.clientHeight),1)*100;var sp=document.getElementById('scroll-progress');if(sp)sp.style.width=p+'%';var nav=document.getElementById('mainNav');if(nav)nav.classList.toggle('scrolled',window.scrollY>10);var tt=document.getElementById('toTop');if(tt)tt.classList.toggle('show',window.scrollY>700);});
+(function(){var tt=document.getElementById('toTop');if(tt)tt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+(function(){var b=document.getElementById('burger');if(b)b.addEventListener('click',function(){var nl=document.getElementById('navLinks');if(nl)nl.classList.toggle('open');});var links=document.querySelectorAll('#navLinks a');links.forEach(function(a){a.addEventListener('click',function(){var nl=document.getElementById('navLinks');if(nl)nl.classList.remove('open');});});})();
+document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var id=a.getAttribute('href');if(id&&id.length>1){var t=document.querySelector(id);if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}}});});
+(function(){if(!('IntersectionObserver' in window))return;var ro=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('visible');}});},{threshold:.12});document.querySelectorAll('.reveal,.reveal-l,.reveal-r,.stagger,.feature-card,.guide-card').forEach(function(el){ro.observe(el)});})();
+(function(){var c=document.getElementById('three-canvas');if(!c||typeof THREE==='undefined')return;try{var s=new THREE.Scene(),cam=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,.1,1000),r=new THREE.WebGLRenderer({canvas:c,alpha:true,antialias:true});r.setSize(innerWidth,innerHeight);r.setPixelRatio(Math.min(devicePixelRatio,2));var n=70,p=new Float32Array(n*3),col=new Float32Array(n*3);for(var i=0;i<n*3;i+=3){p[i]=(Math.random()-.5)*18;p[i+1]=(Math.random()-.5)*18;p[i+2]=(Math.random()-.5)*18;var cl=new THREE.Color(Math.random()>.5?0xc9a227:0x2563eb);col[i]=cl.r;col[i+1]=cl.g;col[i+2]=cl.b;}var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(p,3));g.setAttribute('color',new THREE.BufferAttribute(col,3));var pts=new THREE.Points(g,new THREE.PointsMaterial({size:.09,vertexColors:true,transparent:true,opacity:.5}));s.add(pts);cam.position.z=7;var mx=0,my=0;document.addEventListener('mousemove',function(e){mx=(e.clientX/innerWidth-.5)*.5;my=(e.clientY/innerHeight-.5)*.5;});(function a(){requestAnimationFrame(a);pts.rotation.x+=.0004;pts.rotation.y+=.0006;cam.position.x+=(mx*2-cam.position.x)*.02;cam.position.y+=(-my*2-cam.position.y)*.02;cam.lookAt(s.position);r.render(s,cam);})();addEventListener('resize',function(){cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();r.setSize(innerWidth,innerHeight);});}catch(e){}})();
 </script>
 
 </body>
