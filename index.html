@@ -318,6 +318,13 @@ body.consent-lock{overflow:hidden}
 .hero .tagline{font-size:.78rem;font-weight:700;color:var(--ink);letter-spacing:1.6px;text-transform:uppercase;margin-bottom:.9rem}
 .hero .lede{font-size:clamp(.86rem,1.75vw,1.02rem);font-weight:500;color:var(--muted);max-width:700px;margin:0 auto 12px;line-height:1.6}
 .hero .desc{font-size:.88rem;color:var(--muted);max-width:720px;margin:0 auto}
+.hero .desc .manifest-highlight{display:inline-block;background:linear-gradient(90deg,rgba(201,162,39,.28),rgba(238,216,138,.55),rgba(201,162,39,.28));background-size:200% 100%;border:1px solid rgba(201,162,39,.6);border-radius:10px;padding:4px 12px 5px;font-weight:800;color:#0a1128;box-shadow:0 4px 18px rgba(201,162,39,.35),inset 0 1px 0 rgba(255,255,255,.6);animation:manifestGlow 2.4s ease-in-out infinite;position:relative}
+.hero .desc .manifest-highlight::before{content:'\2728 ';color:#8a6d14}
+@keyframes manifestGlow{0%,100%{background-position:0% 50%;box-shadow:0 4px 18px rgba(201,162,39,.35)}50%{background-position:100% 50%;box-shadow:0 0 26px rgba(238,216,138,.9),0 0 52px rgba(201,162,39,.45)}}
+.world-no1{display:flex;justify-content:center;margin:2px auto 12px}
+.world-no1 span{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-h);font-weight:900;letter-spacing:1.2px;text-transform:uppercase;font-size:clamp(.82rem,2.6vw,1.02rem);color:#231a02;background:linear-gradient(135deg,#a8841c,#eed88a 40%,#fff8dc 50%,#eed88a 60%,#a8841c);background-size:200% auto;border:1px solid rgba(138,109,20,.55);border-radius:99px;padding:9px 22px;box-shadow:0 8px 28px rgba(201,162,39,.5),inset 0 1px 0 rgba(255,255,255,.7);animation:no1Shine 2.6s linear infinite,no1Float 3s ease-in-out infinite}
+@keyframes no1Shine{to{background-position:200% center}}
+@keyframes no1Float{50%{transform:translateY(-3px)}}
 .hero-buttons{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin-top:1.3rem}
 /* legacy button aliases -> index pills */
 .btn-primary{background:linear-gradient(135deg,#a8841c,#e9cf6e 55%,#c9a227);color:#231a02;box-shadow:0 10px 26px rgba(201,162,39,.4)}
@@ -400,7 +407,7 @@ body.consent-lock{overflow:hidden}
 .pricing-trial{background:linear-gradient(135deg,#fbf7e6,#f6eecb);border:1px solid rgba(201,162,39,.45);border-radius:16px;padding:1.3rem;text-align:center;max-width:600px;margin:0 auto 1.6rem}
 .pricing-trial h3{font-size:1.05rem;font-weight:800;color:#6b5a10;font-family:var(--font-h)}
 .pricing-trial p{font-size:.82rem;color:#6b5a10;margin-top:4px}
-.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,320px));gap:1rem;justify-content:center;max-width:1000px;margin:0 auto}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;justify-content:center;max-width:1280px;margin:0 auto}
 .pricing-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:1.8rem 1.4rem;text-align:center;transition:.3s;position:relative;overflow:hidden}
 .pricing-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:rgba(201,162,39,.5)}
 .pricing-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0a1128,#c9a227,#eed88a)}
@@ -464,8 +471,9 @@ body.consent-lock{overflow:hidden}
         <div class="eyebrow reveal"><span class="pulse"><i class="fas fa-bolt"></i></span> Automated Extension Building • No More Manual Hustle</div>
         <h1 class="hero-h1 reveal">AIXER &mdash; Empowers Everyone To <span class="serif">Build Extensions</span></h1>
         <p class="lede reveal">Make Extensions For App Inventor, Kodular, Niotron &amp; Other AI2 Based No-code App Builders.</p>
+        <div class="world-no1 reveal"><span>🏆 World's No.1 Extension Builder</span></div>
         <p class="desc reveal">
-            AIXER automatically adds permissions, activities and services to the manifest which makes it the best Extension Builder. Create dependency-based
+            <span class="manifest-highlight">AIXER automatically adds permissions, activities and services to the manifest which makes it the best Extension Builder.</span> Create dependency-based
             extensions like AdMob, Play Billing, ExoPlayer, and more with CLI tools, a desktop GUI,
             and a reproducible packaging pipeline.
         </p>
@@ -474,7 +482,7 @@ body.consent-lock{overflow:hidden}
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 Download AIXER
             </a>
-            <a href="https://www.paypal.com/ncp/payment/QB6J8MEH3ERD2" class="btn btn-green">
+            <a href="#pricing" class="btn btn-green">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                 Purchase License
             </a>
@@ -787,6 +795,33 @@ body.consent-lock{overflow:hidden}
         </div>
 
         <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="pricing-name">7 Days</div>
+                <div class="pricing-price">$10 <span></span></div>
+                <div class="pricing-duration">7 Days Access</div>
+                <div class="pricing-desc">
+                    Full access to AIXER for 7 days. All features, all SDK presets, and updates. Perfect for trying out.
+                </div>
+                <a href="https://www.paypal.com/ncp/payment/WE3AWKPWQDBAG" class="btn-pricing">Get Started</a>
+            </div>
+            <div class="pricing-card">
+                <div class="pricing-name">30 Days</div>
+                <div class="pricing-price">$25 <span></span></div>
+                <div class="pricing-duration">30 Days Access</div>
+                <div class="pricing-desc">
+                    Full access to AIXER for 30 days. All features, all SDK presets, and updates. Perfect for single projects.
+                </div>
+                <a href="https://www.paypal.com/ncp/payment/K6WFBF8EAP2B4" class="btn-pricing">Get Started</a>
+            </div>
+            <div class="pricing-card">
+                <div class="pricing-name">365 Days</div>
+                <div class="pricing-price">$99 <span></span></div>
+                <div class="pricing-duration">365 Days Access</div>
+                <div class="pricing-desc">
+                    Full access to AIXER for 365 days. All features, all SDK presets, and updates. Best for regular builders.
+                </div>
+                <a href="https://www.paypal.com/ncp/payment/PRZB9E2X298TN" class="btn-pricing">Get Started</a>
+            </div>
             <div class="pricing-card featured">
                 <div class="pricing-name">Lifetime</div>
                 <div class="pricing-price">$149 <span></span></div>
@@ -1221,7 +1256,7 @@ blacklist:
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 Contact via WhatsApp
             </a>
-            <a href="https://www.paypal.com/ncp/payment/QB6J8MEH3ERD2" class="btn btn-green">Purchase License</a>
+            <a href="#pricing" class="btn btn-green">Purchase License</a>
             <a href="javascript:void(0)" onclick="openDownloadModal()" class="btn btn-gold">Download AIXER</a>
         </div>
     </div>
